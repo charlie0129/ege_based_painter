@@ -14,8 +14,6 @@ bool g_isUserSetFillColor = false;
 int g_customColor = 0x0;
 int g_customFillColor = 0x0;
 
-
-
 struct ShapeData shapeData[512];
 unsigned short int g_nTotalShapes = 0;
 unsigned short int g_nCircle = 0;
