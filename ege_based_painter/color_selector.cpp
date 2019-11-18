@@ -8,8 +8,6 @@ int colorInf[7] = { 0x5454FC,   //LIGHTBLUE
 					0xFCFC54,   //YELLOW
 					0xFCFCFC }; //WHITE
 
-
-
 void ChooseColor(void)
 {
 	const int TOTAL_LN = 10; // total items in the menu bar
