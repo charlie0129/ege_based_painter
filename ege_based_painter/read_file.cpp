@@ -3,13 +3,13 @@
 bool ReadFile(void)
 {
 	
-	FILE* fp;
+	FILE*           fp;
 	const short int TOTAL_LN = 2;
-	short int readResult; // indicates whether the reading action is successful
-	bool isReadyToExit = false;
-	OPENFILENAME ofn = { 0 };
-	TCHAR strFilename[MAX_PATH] = { 0 };
-	char c_strFilename[MAX_PATH] = { 0 };
+	short int       readResult; // indicates whether the reading action is successful
+	bool            isReadyToExit = false;
+	OPENFILENAME    ofn = { 0 };
+	TCHAR           strFilename[MAX_PATH] = { 0 };
+	char            c_strFilename[MAX_PATH] = { 0 };
 
 	cleardevice();
 	InitUI(0);
@@ -24,8 +24,6 @@ bool ReadFile(void)
 	xyprintf(8, 8 + 0 * MENU_HIGHT, "1. 读取绘图存档");
 	xyprintf(8, 8 + 1 * MENU_HIGHT, "2. 不读取绘图存档");
 	xyprintf(MENU_LENGTH + 15, 8 + 2 * MENU_HIGHT, "用鼠标点击菜单");
-	xyprintf(MENU_LENGTH + 15, 8 + 3 * MENU_HIGHT, "注：要模拟读取情况");
-	xyprintf(MENU_LENGTH + 15, 8 + 4 * MENU_HIGHT, "    请直接运行Debug文件夹里的.exe文件 相对路径下有个save.draw文件模拟读取情况");
 
 
 
@@ -39,8 +37,7 @@ bool ReadFile(void)
 			switch (GetMouseCurrentLn(TOTAL_LN))
 			{
 			case 1:
-			case1:
-				
+			case1:				
 				ofn.lStructSize = sizeof(OPENFILENAME);
 				ofn.hwndOwner = NULL;
 				ofn.lpstrFilter = TEXT("*.draw\0\0");
@@ -74,13 +71,16 @@ bool ReadFile(void)
 					{
 					case IDRETRY:
 						goto case1;
+						fclose(fp);
 						break;
 					case IDABORT:
 						isReadyToExit = false;
+						fclose(fp);
 						break;
 					case IDIGNORE:
 						isReadyToExit = true;
 						readResult = 0;
+						fclose(fp);
 						break;
 					default:
 						break;
@@ -90,15 +90,26 @@ bool ReadFile(void)
 				{
 					cleardevice();
 					InitUI(0);
-					if ((fread(shapeData, sizeof(shapeData[0]), sizeof(shapeData) / sizeof(shapeData[0]), fp) == sizeof(shapeData) / sizeof(shapeData[0])) && 
-						(fread(&g_nTotalShapes, sizeof(unsigned short int), 1, fp) == 1) && 
-						(fread(&fileValidityCheckSuffix, sizeof(fileValidityCheckSuffix), 1, fp) == 1) && 
+					if ((fread(shapeData, 
+							sizeof(shapeData[0]), 
+							sizeof(shapeData) / sizeof(shapeData[0]), 
+							fp) == 
+							sizeof(shapeData) / sizeof(shapeData[0])) && 
+						(fread(&g_nTotalShapes, 
+							sizeof(unsigned short int), 
+							1, 
+							fp) == 1) && 
+						(fread(&fileValidityCheckSuffix, 
+							sizeof(fileValidityCheckSuffix), 
+							1, 
+							fp) == 1) && 
 						(fileValidityCheckSuffix == 'C'))
 					{
 						MessageBox(NULL,
 							TEXT("读取成功"),
 							TEXT("提示"),
 							MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
+						fclose(fp);
 						readResult = 1;
 						isReadyToExit = true;
 					}
@@ -106,7 +117,6 @@ bool ReadFile(void)
 					{
 						goto READINGFAILED;
 					}
-					
 				}
 				break;
 			case 2: // do not read file
@@ -156,8 +166,6 @@ bool ReadFile(void)
 		default:
 			break;
 		}
-
-		fclose(fp);
 	}
 	return readResult;
 }
@@ -166,8 +174,6 @@ bool ReadFile(void)
 void TCHARToChar(const TCHAR* tchar, char* _char)
 {
 	int iLength;
-	//获取字节长度   
 	iLength = WideCharToMultiByte(CP_ACP, 0, tchar, -1, NULL, 0, NULL, NULL);
-	//将tchar值赋给_char    
 	WideCharToMultiByte(CP_ACP, 0, tchar, -1, _char, iLength, NULL, NULL);
 }
