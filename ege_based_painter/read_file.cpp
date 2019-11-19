@@ -8,7 +8,7 @@ bool ReadFile(void)
 	short int readResult; // indicates whether the reading action is successful
 	bool isReadyToExit = false;
 	OPENFILENAME ofn = { 0 };
-	TCHAR strFilename[MAX_PATH] = { 0 };//用于接收文件名
+	TCHAR strFilename[MAX_PATH] = { 0 };
 	char c_strFilename[MAX_PATH] = { 0 };
 
 	cleardevice();
