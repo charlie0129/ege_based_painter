@@ -181,7 +181,7 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 				DrawAllPrevShapes(true);
 				setcolor(0x555555);
 				
-				circle(circleCenterX, circleCenterY, (int)sqrt(pow(circleCenterX - msg.x, 2) + pow(circleCenterY - msg.y, 2)));
+				circle(circleCenterX, circleCenterY, (int)sqrt(pow((double)circleCenterX - (double)msg.x, 2) + pow((double)circleCenterY - (double)msg.y, 2)));
 			}
 
 

@@ -1,9 +1,9 @@
 #pragma once
 #include "global.h"
-#include "UI.h"
+#include "read_file.h"
 
 extern struct ShapeData shapeData[512];
+extern unsigned short int g_nTotalShapes;
 extern char fileValidityCheckSuffix;
 
-bool ReadFile(void);
-void TCHARToChar(const TCHAR* tchar, char* _char);
+int SaveFile(void);

@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <Windows.h>
+#include <Commdlg.h>
 
 enum SHAPE
 {

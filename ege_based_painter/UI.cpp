@@ -69,6 +69,8 @@ void InitUI(short int errCode)
 
 void ClearData(void)
 {
+
+	memset(shapeData, '\0', sizeof(shapeData));
 	g_nTotalShapes = 0;
 }
 

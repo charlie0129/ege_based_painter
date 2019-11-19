@@ -161,6 +161,7 @@
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="mouse_draw.cpp" />
     <ClCompile Include="read_file.cpp" />
+    <ClCompile Include="save_file.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="menu.h" />
     <ClInclude Include="mouse_draw.h" />
     <ClInclude Include="read_file.h" />
+    <ClInclude Include="save_file.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>

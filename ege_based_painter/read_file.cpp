@@ -2,12 +2,17 @@
 
 bool ReadFile(void)
 {
-	cleardevice();
-	InitUI(0);
+	
+	FILE* fp;
 	const short int TOTAL_LN = 2;
 	short int readResult; // indicates whether the reading action is successful
 	bool isReadyToExit = false;
+	OPENFILENAME ofn = { 0 };
+	TCHAR strFilename[MAX_PATH] = { 0 };//用于接收文件名
+	char c_strFilename[MAX_PATH] = { 0 };
 
+	cleardevice();
+	InitUI(0);
 	printf("请在菜单界面用鼠标点击操作\n");
 
 	mouse_msg msg;
@@ -22,7 +27,7 @@ bool ReadFile(void)
 	xyprintf(MENU_LENGTH + 15, 8 + 3 * MENU_HIGHT, "注：要模拟读取情况");
 	xyprintf(MENU_LENGTH + 15, 8 + 4 * MENU_HIGHT, "    请直接运行Debug文件夹里的.exe文件 相对路径下有个save.draw文件模拟读取情况");
 
-	FILE *fp;
+
 
 	for (; !isReadyToExit; delay_fps(800))
 	{
@@ -34,13 +39,35 @@ bool ReadFile(void)
 			switch (GetMouseCurrentLn(TOTAL_LN))
 			{
 			case 1:
-				case1:
-				if ((fp = fopen(".\\save.draw", "r")) == NULL) // unsuccessful reading
+			case1:
+				
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = NULL;
+				ofn.lpstrFilter = TEXT("*.draw\0\0");
+				ofn.nFilterIndex = 1;
+				ofn.lpstrFile = strFilename;
+				ofn.nMaxFile = sizeof(strFilename);
+				ofn.lpstrInitialDir = NULL;
+				ofn.lpstrTitle = TEXT("请选择一个文件");
+				ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
+				if (!(GetOpenFileName(&ofn)))
 				{
+					MessageBox(NULL, TEXT("请选择一个文件"), NULL, MB_ICONERROR);
+					goto case1;
+				}
+
+				TCHARToChar(strFilename, c_strFilename);
+				
+				fp = fopen(c_strFilename, "rb+");
+				rewind(fp);
+
+				if (fp == NULL)
+				{
+					READINGFAILED:
 					cleardevice();
 					InitUI(0);
 					int selection = MessageBox(NULL, 
-						TEXT("请检查文件是否存在或完整"), 
+						TEXT("请检查文件是否存在或正确"), 
 						TEXT("读取错误！"), 
 						MB_ABORTRETRYIGNORE | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 					switch (selection)
@@ -59,16 +86,27 @@ bool ReadFile(void)
 						break;
 					}
 				}
-				else // successful reading
+				else 
 				{
 					cleardevice();
 					InitUI(0);
-					MessageBox(NULL, 
-						TEXT("读取成功"), 
-						TEXT("提示"), 
-						MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
-					readResult = 1;
-					isReadyToExit = true;
+					if ((fread(shapeData, sizeof(shapeData[0]), sizeof(shapeData) / sizeof(shapeData[0]), fp) == sizeof(shapeData) / sizeof(shapeData[0])) && 
+						(fread(&g_nTotalShapes, sizeof(unsigned short int), 1, fp) == 1) && 
+						(fread(&fileValidityCheckSuffix, sizeof(fileValidityCheckSuffix), 1, fp) == 1) && 
+						(fileValidityCheckSuffix == 'C'))
+					{
+						MessageBox(NULL,
+							TEXT("读取成功"),
+							TEXT("提示"),
+							MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
+						readResult = 1;
+						isReadyToExit = true;
+					}
+					else
+					{
+						goto READINGFAILED;
+					}
+					
 				}
 				break;
 			case 2: // do not read file
@@ -118,6 +156,18 @@ bool ReadFile(void)
 		default:
 			break;
 		}
+
+		fclose(fp);
 	}
 	return readResult;
+}
+
+
+void TCHARToChar(const TCHAR* tchar, char* _char)
+{
+	int iLength;
+	//获取字节长度   
+	iLength = WideCharToMultiByte(CP_ACP, 0, tchar, -1, NULL, 0, NULL, NULL);
+	//将tchar值赋给_char    
+	WideCharToMultiByte(CP_ACP, 0, tchar, -1, _char, iLength, NULL, NULL);
 }
