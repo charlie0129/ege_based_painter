@@ -7,6 +7,7 @@
 #define EGE_FONT "Segoe UI"
 #define MENU_LENGTH 220
 #define MENU_HIGHT 21
+#define REFRESH_RATE 800
 
 #include "graphics.h"
 #include <stdio.h>
@@ -24,8 +25,8 @@ enum SHAPE
 
 struct Coordinate
 {
-	unsigned short int x;
-	unsigned short int y;
+	WORD x;
+	WORD y;
 };
 
 struct ShapeData
@@ -33,8 +34,14 @@ struct ShapeData
 	enum SHAPE shapeType;
 	int extraData[10];
 	struct Coordinate coords[20];
-	unsigned short int lineThickness;
+	WORD lineThickness;
 	bool isFill;
-	unsigned int foregroundColor;
-	unsigned int fillColor;
+	UINT foregroundColor;
+	UINT fillColor;
+};
+
+struct MenuLnAndCol
+{
+	WORD ln;
+	WORD col;
 };

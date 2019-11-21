@@ -21,7 +21,7 @@ void ChooseColor(void)
 
 	// initialization of varibles needed to read inputs
 	char str[LEN_OF_STR_TO_READ];
-	char *readTmp;
+	char* readTmp;
 	bool isInputValid = true;
 	int numRead[N_OF_NUMS_TO_READ];
 	int i; // loop controller. I didn't use "for" loop because in this situation it's not a good idea.
@@ -31,16 +31,16 @@ void ChooseColor(void)
 	printf("操作指南：\n");
 	printf("用鼠标先点选颜色\n");
 
-	DrawMenuOutline(TOTAL_LN);
-	
+	DrawMenuOutline(1, TOTAL_LN, 1);
+
 
 	PrintColorChoosingInsideMenu(0, true);
 
-	
+
 	mouse_msg msg;
-	
+
 	msg = getmouse();
-		
+
 	for (; !hasSetColor; delay_fps(800))
 	{
 
@@ -48,11 +48,11 @@ void ChooseColor(void)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			switch (GetMouseCurrentLn(TOTAL_LN))
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1:
 				return;
-		
+
 			case 2:
 				hasSetColor = true;
 				g_isUserSetColor = true;
@@ -152,8 +152,7 @@ void ChooseColor(void)
 					{
 						isInputValid = false;
 					}
-				}
-				while (!isInputValid);
+				} while (!isInputValid);
 
 				g_customColor = EGERGB(numRead[0], numRead[1], numRead[2]);
 				printf("		已将前景色设置为 #%02X%02X%02X 色\n", numRead[0], numRead[1], numRead[2]);
@@ -172,11 +171,11 @@ void ChooseColor(void)
 			xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 			setcolor(0x202030);
 			DrawAllPrevShapes(false);
-			DrawMenuOutline(TOTAL_LN);
-			switch (GetMouseCurrentLn(TOTAL_LN))
+			DrawMenuOutline(1, TOTAL_LN, 1);
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 0:
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				PrintColorChoosingInsideMenu(0, true);
 				break;
 			case 1:

@@ -77,7 +77,7 @@ int RandColor(void)
 	return hexColorValue;
 }
 
-void PrintMouseDrawingInsideMenu(short int lnToPrint)
+void PrintMouseDrawingInsideMenu(WORD lnToPrint)
 {
 	switch (lnToPrint)
 	{
@@ -96,7 +96,7 @@ void PrintMouseDrawingInsideMenu(short int lnToPrint)
 	}
 }
 
-void PrintCoordDrawingInsideMenu(short int lnToPrint)
+void PrintCoordDrawingInsideMenu(WORD lnToPrint)
 {
 	switch (lnToPrint)
 	{

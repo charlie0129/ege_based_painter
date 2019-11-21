@@ -17,7 +17,7 @@ bool ReadFile(void)
 
 	mouse_msg msg;
 
-	DrawMenuOutline(TOTAL_LN);
+	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0xFFFFFF);
 	setfont(EGE_FONT_SIZE, 0, EGE_FONT);
 	
@@ -27,14 +27,14 @@ bool ReadFile(void)
 
 
 
-	for (; !isReadyToExit; delay_fps(800))
+	for (; !isReadyToExit; delay_fps(REFRESH_RATE))
 	{
 		msg = getmouse();
 
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			switch (GetMouseCurrentLn(TOTAL_LN))
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1:
 			case1:				
@@ -55,7 +55,7 @@ bool ReadFile(void)
 
 				TCHARToChar(strFilename, c_strFilename);
 				
-				fp = fopen(c_strFilename, "rb+");
+				fp = fopen(c_strFilename, "rb");
 				rewind(fp);
 
 				if (fp == NULL)
@@ -64,23 +64,20 @@ bool ReadFile(void)
 					cleardevice();
 					InitUI(0);
 					int selection = MessageBox(NULL, 
-						TEXT("请检查文件是否存在或正确"), 
+						TEXT("请检查文件是否存在或正确\n确保路径没有中文"), 
 						TEXT("读取错误！"), 
 						MB_ABORTRETRYIGNORE | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 					switch (selection)
 					{
 					case IDRETRY:
 						goto case1;
-						fclose(fp);
 						break;
 					case IDABORT:
 						isReadyToExit = false;
-						fclose(fp);
 						break;
 					case IDIGNORE:
 						isReadyToExit = true;
 						readResult = 0;
-						fclose(fp);
 						break;
 					default:
 						break;
@@ -94,16 +91,16 @@ bool ReadFile(void)
 							sizeof(shapeData[0]), 
 							sizeof(shapeData) / sizeof(shapeData[0]), 
 							fp) == 
-							sizeof(shapeData) / sizeof(shapeData[0])) && 
-						(fread(&g_nTotalShapes, 
-							sizeof(unsigned short int), 
+							sizeof(shapeData) / sizeof(shapeData[0]))  
+						&& (fread(&g_nTotalShapes, 
+							sizeof(WORD), 
 							1, 
-							fp) == 1) && 
-						(fread(&fileValidityCheckSuffix, 
+							fp) == 1) 
+						&& (fread(&fileValidityCheckSuffix, 
 							sizeof(fileValidityCheckSuffix), 
 							1, 
-							fp) == 1) && 
-						(fileValidityCheckSuffix == 'C'))
+							fp) == 1) 
+						&& (fileValidityCheckSuffix == 'C'))
 					{
 						MessageBox(NULL,
 							TEXT("读取成功"),
@@ -120,12 +117,12 @@ bool ReadFile(void)
 				}
 				break;
 			case 2: // do not read file
-				cleardevice();
+				/*cleardevice();
 				InitUI(0);
 				MessageBox(NULL,
 					TEXT("未读取"),
 					TEXT("提示"),
-					MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
+					MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);*/
 				readResult = 0;
 				isReadyToExit = true;
 				break;
@@ -136,11 +133,11 @@ bool ReadFile(void)
 		case mouse_msg_move:
 			setcolor(0x90FF90);
 			xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
-			DrawMenuOutline(TOTAL_LN);
-			switch (GetMouseCurrentLn(TOTAL_LN))
+			DrawMenuOutline(1, TOTAL_LN, 1);
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 0:
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0xFFFFFF);
 				xyprintf(8, 8 + 0 * MENU_HIGHT, "1. 读取绘图存档");
 				xyprintf(8, 8 + 1 * MENU_HIGHT, "2. 不读取绘图存档");
@@ -167,6 +164,8 @@ bool ReadFile(void)
 			break;
 		}
 	}
+	InitUI(0);
+	fileEdited = false;
 	return readResult;
 }
 

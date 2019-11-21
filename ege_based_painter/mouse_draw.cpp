@@ -2,7 +2,7 @@
 
 
 
-void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
+void mouse_DrawCircle(WORD nOfShapesToDraw)
 {
 	const short int TOTAL_LN = 2; // total items in the menu bar
 	bool isInProgress = false; // To determine whether the mouse click is the first step or the second step
@@ -10,7 +10,7 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 	int circleCenterY;
 	int	circleOuterX;
 	int circleOuterY;
-	unsigned short int tmpNOfShapes = g_nTotalShapes;
+	WORD tmpNOfShapes = g_nTotalShapes;
 	
 
 	printf("已进入鼠标画空心圆模式\n");
@@ -18,14 +18,15 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 	printf("用鼠标先点选圆心再点选圆上任意一点即可连续画空心圆\n");
 	//setcolor(0x555555);
 	DrawAllPrevShapes(true);
-	DrawMenuOutline(TOTAL_LN);
+	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0xFFFFFF);
 	PrintMouseDrawingInsideMenu(0);
+
 	mouse_msg msg;
 
 	
 
-	for (; is_run(); delay_fps(800)) // Using "for" statement to draw multiple circles at a time and refresh the screen
+	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
 
 		msg = getmouse();
@@ -33,7 +34,7 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			if (GetMouseCurrentLn(TOTAL_LN) == 2) // undo
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
 			{
 				if (g_nTotalShapes > 0)
 				{
@@ -45,7 +46,7 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 				// refresh the windows with menu contents
 				cleardevice();
 				InitUI(0);
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0xFFFFFF);
 				PrintMouseDrawingInsideMenu(0);
 				setcolor(0x90FF90);
@@ -54,7 +55,7 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 				break;
 			}
 
-			if (GetMouseCurrentLn(TOTAL_LN) == 1)
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
 			{
 				return;
 			}
@@ -131,15 +132,15 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 			if (!isInProgress)
 			{
 				InitUI(0);
-				//DrawMenuOutline(TOTAL_LN);
+				//DrawMenuOutline(1, TOTAL_LN, 1);
 				//setcolor(0xFFFFFF);
 				//PrintMouseDrawingInsideMenu(0);
 				setcolor(0x90FF90);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
-				switch (GetMouseCurrentLn(TOTAL_LN))
+				switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 				{
 				case 0:
-					DrawMenuOutline(TOTAL_LN);
+					DrawMenuOutline(1, TOTAL_LN, 1);
 					setcolor(0xFFFFFF);
 					PrintMouseDrawingInsideMenu(0);
 					break;
@@ -154,6 +155,7 @@ void mouse_DrawCircle(unsigned short int nOfShapesToDraw)
 					PrintMouseDrawingInsideMenu(0);
 					setcolor(0x9090FF);
 					PrintMouseDrawingInsideMenu(2);
+					break;
 				default:
 					break;
 				}
@@ -207,14 +209,14 @@ void mouse_DrawLine(void)
 	printf("用鼠标先点选起点再点选终点即可连续画线\n");
 	//setcolor(0x555555);
 	DrawAllPrevShapes(true);
-	DrawMenuOutline(TOTAL_LN);
+	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0xFFFFFF);
 	PrintMouseDrawingInsideMenu(0);
 
 	mouse_msg msg;
 	
 
-	for (; is_run(); delay_fps(800)) // Using "for" statement to draw multiple circles at a time and refresh the screen
+	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
 		msg = getmouse(); // Get mouse clicks and position
 
@@ -222,7 +224,7 @@ void mouse_DrawLine(void)
 		{
 		case mouse_msg_down:
 
-			if (GetMouseCurrentLn(TOTAL_LN) == 2)
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2)
 			{
 				if (g_nTotalShapes > 0)
 				{
@@ -234,7 +236,7 @@ void mouse_DrawLine(void)
 				// refresh the windows with menu contents
 				cleardevice();
 				InitUI(0);
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0xFFFFFF);
 				PrintMouseDrawingInsideMenu(0);
 				setcolor(0x90FF90);
@@ -243,7 +245,7 @@ void mouse_DrawLine(void)
 				break;
 			}
 
-			if (GetMouseCurrentLn(TOTAL_LN) == 1)
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
 			{
 				return;
 			}
@@ -314,15 +316,15 @@ void mouse_DrawLine(void)
 			if (!isInProgress)
 			{
 				InitUI(0);
-				//DrawMenuOutline(TOTAL_LN);
+				//DrawMenuOutline(1, TOTAL_LN, 1);
 				//setcolor(0xFFFFFF);
 				//PrintMouseDrawingInsideMenu(0);
 				setcolor(0x90FF90);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
-				switch (GetMouseCurrentLn(TOTAL_LN))
+				switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 				{
 				case 0:
-					DrawMenuOutline(TOTAL_LN);
+					DrawMenuOutline(1, TOTAL_LN, 1);
 					setcolor(0xFFFFFF);
 					PrintMouseDrawingInsideMenu(0);
 					break;
@@ -387,12 +389,12 @@ void mouse_DrawRectangle(void)
 	printf("用鼠标点选两个对角点即可连续画空矩形\n");
 	//setcolor(0x555555);
 	DrawAllPrevShapes(true);
-	DrawMenuOutline(TOTAL_LN);
+	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0xFFFFFF);
 	PrintMouseDrawingInsideMenu(0);
 	mouse_msg msg;
 
-	for (; is_run(); delay_fps(800)) // Using "for" statement to draw multiple circles at a time and refresh the screen
+	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
 
 		msg = getmouse();
@@ -400,7 +402,7 @@ void mouse_DrawRectangle(void)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			if (GetMouseCurrentLn(TOTAL_LN) == 2) // undo
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
 			{
 				if (g_nTotalShapes > 0)
 				{
@@ -412,7 +414,7 @@ void mouse_DrawRectangle(void)
 				// refresh the windows with menu contents
 				cleardevice();
 				InitUI(0);
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0xFFFFFF);
 				PrintMouseDrawingInsideMenu(0);
 				setcolor(0x90FF90);
@@ -421,7 +423,7 @@ void mouse_DrawRectangle(void)
 				break;
 			}
 
-			if (GetMouseCurrentLn(TOTAL_LN) == 1)
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
 			{
 				return;
 			}
@@ -494,15 +496,15 @@ void mouse_DrawRectangle(void)
 			if (!isInProgress)
 			{
 				InitUI(0);
-				//DrawMenuOutline(TOTAL_LN);
+				//DrawMenuOutline(1, TOTAL_LN, 1);
 				//setcolor(0xFFFFFF);
 				//PrintMouseDrawingInsideMenu(0);
 				setcolor(0x90FF90);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
-				switch (GetMouseCurrentLn(TOTAL_LN))
+				switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 				{
 				case 0:
-					DrawMenuOutline(TOTAL_LN);
+					DrawMenuOutline(1, TOTAL_LN, 1);
 					setcolor(0xFFFFFF);
 					PrintMouseDrawingInsideMenu(0);
 					break;

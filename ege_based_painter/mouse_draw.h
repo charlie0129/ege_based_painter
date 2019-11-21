@@ -2,9 +2,11 @@
 #include "global.h"
 #include "draw.h"
 #include "UI.h"
+#include "color_selector.h"
 
-extern unsigned short int g_nTotalShapes;
+extern WORD g_nTotalShapes;
 
-void mouse_DrawCircle(unsigned short int nOfShapesToDraw);
+
+void mouse_DrawCircle(WORD nOfShapesToDraw);
 void mouse_DrawLine(void);
 void mouse_DrawRectangle(void);

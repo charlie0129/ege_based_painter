@@ -5,10 +5,11 @@ extern bool g_isUserSetColor; // global variable. used to determine whether the 
 extern bool g_isUserSetFillColor;
 extern int g_customColor;
 extern int g_customFillColor;
-extern unsigned short int g_nTotalShapes;
+extern WORD g_nTotalShapes;
 extern struct ShapeData shapeData[512];
+extern int colorInf[7];
 
 void DrawAllPrevShapes(bool withColor);
 int RandColor(void);
-void PrintMouseDrawingInsideMenu(short int lnToPrint);
-void PrintCoordDrawingInsideMenu(short int lnToPrint);
+void PrintMouseDrawingInsideMenu(WORD lnToPrint);
+void PrintCoordDrawingInsideMenu(WORD lnToPrint);

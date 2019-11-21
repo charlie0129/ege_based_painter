@@ -1,9 +1,9 @@
 #include "menu.h"
 
 
-void Menu(bool readResult, unsigned short int nOfShapesToDraw)
+void Menu(bool readResult, WORD nOfShapesToDraw)
 {
-	unsigned short int tmpNOfShapes = g_nTotalShapes;
+	WORD tmpNOfShapes = g_nTotalShapes;
 
 	cleardevice();
 	InitUI(0);
@@ -14,11 +14,11 @@ void Menu(bool readResult, unsigned short int nOfShapesToDraw)
 
 
 	const short int TOTAL_LN = 8;
-	DrawMenuOutline(TOTAL_LN);
+	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0xFFFFFF);
 	PrintMenu(0);
 
-	for (; ; delay_fps(800))
+	for (; ; delay_fps(REFRESH_RATE))
 	{
 		if (!(g_nTotalShapes - nOfShapesToDraw < tmpNOfShapes))
 		{
@@ -30,7 +30,7 @@ void Menu(bool readResult, unsigned short int nOfShapesToDraw)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			switch (GetMouseCurrentLn(TOTAL_LN))
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1:
 				return;
@@ -95,11 +95,11 @@ void Menu(bool readResult, unsigned short int nOfShapesToDraw)
 			xyprintf(678, 582, "µ±Ç°×ø±ê: (%03d, %03d)", msg.x, msg.y);
 			setcolor(0x202030);
 			DrawAllPrevShapes(false);
-			DrawMenuOutline(TOTAL_LN);
-			switch (GetMouseCurrentLn(TOTAL_LN))
+			DrawMenuOutline(1, TOTAL_LN, 1);
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 0:
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0xFFFFFF);
 				PrintMenu(0);
 				break;
@@ -138,6 +138,18 @@ void Menu(bool readResult, unsigned short int nOfShapesToDraw)
 				PrintMenu(0);
 				setcolor(0x9090FF);
 				PrintMenu(6);
+				break;
+			case 7:
+				setcolor(0xFFFFFF);
+				PrintMenu(0);
+				setcolor(0x9090FF);
+				PrintMenu(7);
+				break;
+			case 8:
+				setcolor(0xFFFFFF);
+				PrintMenu(0);
+				setcolor(0x9090FF);
+				PrintMenu(8);
 				break;
 			default:
 				break;

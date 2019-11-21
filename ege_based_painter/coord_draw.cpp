@@ -8,7 +8,7 @@ void coord_DrawPolyPrompt(void)
 	// variables needed for the first prompt
 	bool isInputValid;
 	char str1[255]; // a string to store the input
-	unsigned short int sides;
+	WORD sides;
 
 	// variables needed for the second prompt
 	char str[511]; // a string to store the input
@@ -149,7 +149,7 @@ void coord_DrawPoly(void)
 	//setcolor(0x555555);
 	coord_DrawPolyPrompt();
 	DrawAllPrevShapes(true);
-	DrawMenuOutline(TOTAL_LN);
+	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0xFFFFFF);
 	PrintCoordDrawingInsideMenu(0);
 	
@@ -157,7 +157,7 @@ void coord_DrawPoly(void)
 
 
 
-	for (; is_run(); delay_fps(800)) // Using "for" statement to draw multiple circles at a time and refresh the screen
+	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
 
 		msg = getmouse();
@@ -165,13 +165,13 @@ void coord_DrawPoly(void)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			if (GetMouseCurrentLn(TOTAL_LN) == 3)
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 3)
 			{
 				coord_DrawPolyPrompt();
 				DrawAllPrevShapes(true);
 			}
 
-			if (GetMouseCurrentLn(TOTAL_LN) == 2) // undo
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
 			{
 				if (g_nTotalShapes > 0)
 				{
@@ -185,7 +185,7 @@ void coord_DrawPoly(void)
 				// refresh the windows with menu contents
 				cleardevice();
 				InitUI(0);
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0xFFFFFF);
 				PrintCoordDrawingInsideMenu(0);
 				setcolor(0x90FF90);
@@ -194,7 +194,7 @@ void coord_DrawPoly(void)
 				break;
 			}
 
-			if (GetMouseCurrentLn(TOTAL_LN) == 1)
+			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
 			{
 				return;
 			}
@@ -207,15 +207,15 @@ void coord_DrawPoly(void)
 
 			
 			InitUI(0);
-			//DrawMenuOutline(TOTAL_LN);
+			//DrawMenuOutline(1, TOTAL_LN, 1);
 			//setcolor(0xFFFFFF);
 			//PrintCoordDrawingInsideMenu(0);
 			setcolor(0x90FF90);
 			xyprintf(678, 582, "µ±Ç°×ø±ê: (%03d, %03d)", msg.x, msg.y);
-			switch (GetMouseCurrentLn(TOTAL_LN))
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 0:
-				DrawMenuOutline(TOTAL_LN);
+				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0xFFFFFF);
 				PrintCoordDrawingInsideMenu(0);
 				break;

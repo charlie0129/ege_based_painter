@@ -6,7 +6,7 @@
 #include "UI.h"
 #include "save_file.h"
 
-extern unsigned short int g_nTotalShapes;
+extern WORD g_nTotalShapes;
 
-void Menu(bool readResult, unsigned short int nOfShapesToDraw);
+void Menu(bool readResult, WORD nOfShapesToDraw);
 void PrintMenu(short int lnToPrint);

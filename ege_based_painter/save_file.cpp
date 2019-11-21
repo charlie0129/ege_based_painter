@@ -1,8 +1,9 @@
 #include "save_file.h"
 
-int SaveFile(void)
+void SaveFile(void)
 {
 	FILE* fp;
+	reopen:
 	OPENFILENAME ofn = { 0 };
 	TCHAR strFilename[MAX_PATH] = { 0 };
 	char c_strFilename[MAX_PATH] = { 0 };
@@ -19,15 +20,62 @@ int SaveFile(void)
 	if (!(GetSaveFileName(&ofn)))
 	{
 		MessageBox(NULL, TEXT("请输入一个文件名"), NULL, MB_ICONERROR);
+		goto reopen;
 	}
 
 	TCHARToChar(strFilename, c_strFilename);
-	fp = fopen(c_strFilename, "rb+");
+	fp = fopen(c_strFilename, "wb");
 
-	fwrite(shapeData, sizeof(shapeData[0]), sizeof(shapeData) / sizeof(shapeData[0]), fp);
-	fwrite(&g_nTotalShapes, sizeof(unsigned short int), 1, fp);
-	fwrite(&fileValidityCheckSuffix, sizeof(fileValidityCheckSuffix), 1, fp);
-	fclose(fp);
-	return 0;
-	
+	if (fp == NULL)
+	{
+		reread:
+		int selection = MessageBox(NULL,
+			TEXT("无法准备被写入的文件！\n确保画板拥有写入权限且路径没有中文"),
+			TEXT(""),
+			MB_ABORTRETRYIGNORE | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
+		switch (selection)
+		{
+		case IDRETRY:
+			goto reread;
+			break;
+		case IDABORT:
+			goto reopen;
+			break;
+		case IDIGNORE:
+			return;
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		if ((fwrite(shapeData, 
+				sizeof(shapeData[0]), 
+				sizeof(shapeData) / sizeof(shapeData[0]), 
+				fp) == 
+				sizeof(shapeData) / sizeof(shapeData[0])) 
+			&& (fwrite(&g_nTotalShapes, 
+				sizeof(WORD), 
+				1, 
+				fp) == 1) 
+			&& (fwrite(&fileValidityCheckSuffix, 
+				sizeof(fileValidityCheckSuffix), 
+				1, 
+				fp) == 1))
+		{
+			MessageBox(NULL,
+				TEXT("保存成功"),
+				TEXT("提示"),
+				MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
+			fclose(fp);
+		}
+		else
+		{
+			goto reread;
+		}
+	}
+	fileEdited = false;
+	InitUI(0);
+	return;
 }

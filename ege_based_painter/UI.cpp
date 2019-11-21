@@ -3,15 +3,16 @@
 
 void InitUI(short int errCode)
 {
-	static unsigned short int tmp_totalShapes;
-	static unsigned short int nLines;
-	static unsigned short int nCircles;
-	static unsigned short int nRectangles;
-	static unsigned short int nPolygons;
+	static WORD tmp_totalShapes;
+	static WORD nLines;
+	static WORD nCircles;
+	static WORD nRectangles;
+	static WORD nPolygons;
 
 	// count the number of each shape
 	if (tmp_totalShapes != g_nTotalShapes)
 	{
+		fileEdited = true;
 		nLines = 0;
 		nCircles = 0;
 		nRectangles = 0;
@@ -45,7 +46,8 @@ void InitUI(short int errCode)
 	setcolor(0x555555);
 	line(0, 579, 800, 579);
 	line(675, 579, 675, CANVAS_HIGHT);
-	line(197, 579, 197, CANVAS_HIGHT);
+	line(142, 579, 142, CANVAS_HIGHT);
+	line(280, 579, 280, CANVAS_HIGHT);
 	line(62, 579, 62, CANVAS_HIGHT);
 	line(10 + MENU_LENGTH, 1, 10 + MENU_LENGTH, 579);
 
@@ -54,17 +56,30 @@ void InitUI(short int errCode)
 		setcolor(0x90FF90);
 		xyprintf(2, 582, "准备就绪");
 	}
-	if (errCode == 1)
+	else
 	{
 		setcolor(0xFFFF90);
 		xyprintf(2, 582, "正在绘图");
 	}
+
+	if (fileEdited)
+	{
+		setcolor(0xFF9090);
+		xyprintf(67, 582, "更改未保存");
+	}
+	else
+	{
+		setcolor(0x90FF90);
+		xyprintf(67, 582, "更改已保存");
+	}
+
+
 	setcolor(0xFFFFFF);
-	xyprintf(67, 582, "提示信息请看控制台");
-	xyprintf(203, 582, "线: %d", nLines);
-	xyprintf(245, 582, "圆: %d", nCircles);
-	xyprintf(287, 582, "矩形: %d", nRectangles);
-	xyprintf(343, 582, "多边形: %d", nPolygons);
+	xyprintf(133 + 16, 582, "提示信息请看控制台");
+	xyprintf(203 + 81, 582, "线: %d", nLines);
+	xyprintf(245 + 81, 582, "圆: %d", nCircles);
+	xyprintf(287 + 81, 582, "矩形: %d", nRectangles);
+	xyprintf(343 + 81, 582, "多边形: %d", nPolygons);
 }
 
 void ClearData(void)
@@ -74,23 +89,42 @@ void ClearData(void)
 	g_nTotalShapes = 0;
 }
 
-void DrawMenuOutline(short int ln)
+void DrawMenuOutline(WORD lnStart,
+	WORD lnEnd,
+	WORD col)
 {
 	setcolor(0x555555);
-	line(5, 5, 5, 5 + ln * MENU_HIGHT);
-	line(5 + MENU_LENGTH, 5, 5 + MENU_LENGTH, 5 + ln * MENU_HIGHT);
-	for (int i = 1; i <= ln + 1; i++)
+	// vertical lines
+	for (int j = 0; j <= col; j++)
 	{
-		line(5, 5 + MENU_HIGHT * (i - 1), 5 + MENU_LENGTH, 5 + MENU_HIGHT * (i - 1));
+		line(5 + j * MENU_LENGTH / col,
+			5 + MENU_HIGHT * (lnStart - 1),
+			5 + j * MENU_LENGTH / col,
+			5 + MENU_HIGHT * lnEnd);
+	}
+
+	// horizontal lines
+	for (int i = lnStart - 1; i <= lnEnd; i++)
+	{
+		line(5, 
+			5 + MENU_HIGHT * i, 
+			5 + MENU_LENGTH, 
+			5 + MENU_HIGHT * i);
 		//xyprintf(6 + MENU_LENGTH, 5 + MENU_HIGHT * (i - 1) - 10,"%d\n", 5 + MENU_HIGHT * (i - 1));
 		//xyprintf(5, 5 + MENU_HIGHT * (i - 1) + 1, "%d", i);
 	}
 }
 
-int GetMouseCurrentLn(short int TOTAL_LN)
+struct MenuLnAndCol GetMouseCurrentLnAndCol(
+	WORD lnStart,
+	WORD lnEnd,
+	WORD colNeeded,
+	WORD colTotal)
 {
 	int x, y;
-	int ln = 0;
+	struct MenuLnAndCol coord;
+	coord.ln = 0;
+	coord.col = 0;
 	mousepos(&x, &y);
 
 	/*
@@ -98,19 +132,38 @@ int GetMouseCurrentLn(short int TOTAL_LN)
 	but a i encountered a issue where the function keeps waiting mouse input when there is no mouse input
 	thus causing possible delays
 	later i switched to the mousepos() function
-	finally!!!!!!!!!!!!!!!!!!!!
+	finally!!!!
 	there is no delay
 	*/
 
-	for (short int i = 0; i < TOTAL_LN; i++)
+	if ((x >= 5 + (colNeeded -1) * (MENU_LENGTH / colTotal)) 
+		&& (y >= 5 + (lnStart - 1) * MENU_HIGHT) 
+		&& (x <= 5 + (colNeeded) * (MENU_LENGTH / colTotal))
+		&& (y <= 5 + lnEnd * MENU_HIGHT))
+	{
+		coord.ln = (y - 5) / MENU_HIGHT + 1;
+		coord.col = (x - 5) / (MENU_LENGTH / colTotal) + 1;
+	}
+	
+	/*for (short int i = 0; i < lnTotal; i++)
 	{
 		if ((x >= 5) && 
 			(y >= 5 + i * MENU_HIGHT) && 
 			(x <= 5 + MENU_LENGTH) && 
 			(y <= 5 + (i + 1) * MENU_HIGHT))
 		{
-			ln = i + 1;
+			coord.ln = i + 1;
 		}
-	}
-	return ln;
+		for (short int j = 0; j < colTotal; j++)
+		{
+			if ((x >= 5) &&
+				(y >= 5 + i * MENU_HIGHT) &&
+				(x <= 5 + MENU_LENGTH) &&
+				(y <= 5 + (i + 1) * MENU_HIGHT))
+			{
+				coord.ln = i + 1;
+			}
+		}
+	}*/
+	return coord;
 }
