@@ -13,7 +13,7 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 
 
 
-	const short int TOTAL_LN = 8;
+	const short int TOTAL_LN = 9;
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0xFFFFFF);
 	PrintMenu(0);
@@ -61,25 +61,32 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 			case 5:
 				cleardevice();
 				InitUI(0);
-				mouse_DrawLine();
+				ChooseColor();
 				cleardevice();
 				InitUI(0);
 				break;
 			case 6:
 				cleardevice();
 				InitUI(0);
-				mouse_DrawCircle(nOfShapesToDraw);
+				mouse_DrawLine();
 				cleardevice();
 				InitUI(0);
 				break;
 			case 7:
 				cleardevice();
 				InitUI(0);
-				mouse_DrawRectangle();
+				mouse_DrawCircle(nOfShapesToDraw);
 				cleardevice();
 				InitUI(0);
 				break;
 			case 8:
+				cleardevice();
+				InitUI(0);
+				mouse_DrawRectangle();
+				cleardevice();
+				InitUI(0);
+				break;
+			case 9:
 				cleardevice();
 				InitUI(0);
 				coord_DrawPoly();
@@ -151,6 +158,12 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 				setcolor(0x9090FF);
 				PrintMenu(8);
 				break;
+			case 9:
+				setcolor(0xFFFFFF);
+				PrintMenu(0);
+				setcolor(0x9090FF);
+				PrintMenu(9);
+				break;
 			default:
 				break;
 			}
@@ -179,10 +192,11 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "另存为");
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "清除所有图形");
 		xyprintf(8, 8 + 3 * MENU_HIGHT, "重画单个");
-		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画线");
-		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画空心圆");
-		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画空心矩形");
-		xyprintf(8, 8 + 7 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "选择颜色");
+		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画线");
+		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画空心圆");
+		xyprintf(8, 8 + 7 * MENU_HIGHT, "用鼠标画空心矩形");
+		xyprintf(8, 8 + 8 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "退出");
@@ -197,16 +211,19 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 3 * MENU_HIGHT, "重画单个");
 		break;
 	case 5:
-		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画线");
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "选择颜色");
 		break;
 	case 6:
-		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画空心圆");
+		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画线");
 		break;
 	case 7:
-		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画空心矩形");
+		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画空心圆");
 		break;
 	case 8:
-		xyprintf(8, 8 + 7 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
+		xyprintf(8, 8 + 7 * MENU_HIGHT, "用鼠标画空心矩形");
+		break;
+	case 9:
+		xyprintf(8, 8 + 8 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
 		break;
 	default:
 		break;

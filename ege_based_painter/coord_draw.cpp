@@ -37,6 +37,7 @@ void coord_DrawPolyPrompt(void)
 		// make sure the input is all numbers
 		if (strspn(str1, "0123456789") != strlen(str1))
 		{
+			MessageBox(NULL, TEXT("边数只能包含数字"), NULL, MB_OK);
 			isInputValid = false;
 			continue;
 		}
@@ -47,6 +48,7 @@ void coord_DrawPolyPrompt(void)
 		// avoid out-of-range input numbers
 		if (sides < 3)
 		{
+			MessageBox(NULL, TEXT("不能构成多边形"), NULL, MB_OK);
 			isInputValid = false;
 			continue;
 		}
@@ -84,6 +86,7 @@ void coord_DrawPolyPrompt(void)
 			// make sure the input is all numbers
 			if (strspn(readTmp, "0123456789") != strlen(readTmp))
 			{
+				MessageBox(NULL, TEXT("坐标只能包含数字"), NULL, MB_OK);
 				isInputValid = false;
 				break;
 			}
@@ -91,6 +94,7 @@ void coord_DrawPolyPrompt(void)
 			// avoid too many input numbers 
 			if (i >= (sides * 2))
 			{
+				MessageBox(NULL, TEXT("坐标个数过多"), NULL, MB_OK);
 				isInputValid = false;
 				break;
 			}
@@ -101,6 +105,7 @@ void coord_DrawPolyPrompt(void)
 			// avoid out-of-range input numbers
 			if ((numRead[i] > INPUT_MAX) || (numRead[i] < INPUT_MIN))
 			{
+				MessageBox(NULL, TEXT("坐标范围无效"), NULL, MB_OK);
 				isInputValid = false;
 				break;
 			}
@@ -113,6 +118,7 @@ void coord_DrawPolyPrompt(void)
 		// avoid too few input numbers
 		if (i < (sides * 2))
 		{
+			MessageBox(NULL, TEXT("坐标个数过少"), NULL, MB_OK);
 			isInputValid = false;
 		}
 	}
