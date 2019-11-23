@@ -199,7 +199,7 @@ void coord_DrawPoly(void)
 				DrawAllPrevShapes(true);
 				break;
 			}
-
+			
 			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
 			{
 				return;
