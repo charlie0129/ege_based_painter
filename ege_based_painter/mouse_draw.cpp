@@ -4,7 +4,7 @@
 
 void mouse_DrawCircle(WORD nOfShapesToDraw)
 {
-	const short int TOTAL_LN = 2; // total items in the menu bar
+	const short int TOTAL_LN = 3; // total items in the menu bar
 	bool isInProgress = false; // To determine whether the mouse click is the first step or the second step
 	int circleCenterX;
 	int circleCenterY;
@@ -16,10 +16,10 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 	printf("已进入鼠标画空心圆模式\n");
 	printf("操作指南：\n");
 	printf("用鼠标先点选圆心再点选圆上任意一点即可连续画空心圆\n");
-	//setcolor(0x555555);
+	//setcolor(0x909090);
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
-	setcolor(0xFFFFFF);
+	setcolor(0x000000);
 	PrintMouseDrawingInsideMenu(0);
 
 	mouse_msg msg;
@@ -34,8 +34,13 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
+
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
+			case 1:
+				return;
+				break;
+			case 2:
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -47,18 +52,53 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 				cleardevice();
 				InitUI(0);
 				DrawMenuOutline(1, TOTAL_LN, 1);
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMouseDrawingInsideMenu(0);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 3:
+				ChooseColor();
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			default:
 				break;
 			}
 
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
+
+
+
+
+			//if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
+			//{
+			//	if (g_nTotalShapes > 0)
+			//	{
+			//		if (!isInProgress)
+			//		{
+			//			g_nTotalShapes--;
+			//		}
+			//	}
+			//	// refresh the windows with menu contents
+			//	cleardevice();
+			//	InitUI(0);
+			//	DrawMenuOutline(1, TOTAL_LN, 1);
+			//	setcolor(0x000000);
+			//	PrintMouseDrawingInsideMenu(0);
+			//	setcolor(0x50AA50);
+			//	xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
+			//	DrawAllPrevShapes(true);
+			//	break;
+			//}
+
+			/*if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
 			{
 				return;
-			}
+			}*/
 
 			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
 			if (!isInProgress && 
@@ -128,33 +168,39 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 			}
 			break; // not needed
 		case mouse_msg_move:
-
+			move:
 			if (!isInProgress)
 			{
 				InitUI(0);
 				//DrawMenuOutline(1, TOTAL_LN, 1);
-				//setcolor(0xFFFFFF);
+				//setcolor(0x000000);
 				//PrintMouseDrawingInsideMenu(0);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 				{
 				case 0:
 					DrawMenuOutline(1, TOTAL_LN, 1);
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
 					break;
 				case 1:
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
-					setcolor(0x9090FF);
+					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(1);
 					break;
 				case 2:
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
-					setcolor(0x9090FF);
+					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(2);
+					break;
+				case 3:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(3);
 					break;
 				default:
 					break;
@@ -166,7 +212,7 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 				cleardevice(); 
 				delay_fps(10000);
 				InitUI(1);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 
 
@@ -181,7 +227,7 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 				putpixel(msg.x, msg.y + 1, 0xFCFC54);
 				putpixel(msg.x, msg.y - 1, 0xFCFC54);
 				DrawAllPrevShapes(true);
-				setcolor(0x555555);
+				setcolor(0x909090);
 				
 				circle(circleCenterX, circleCenterY, (int)sqrt(pow((double)circleCenterX - (double)msg.x, 2) + pow((double)circleCenterY - (double)msg.y, 2)));
 			}
@@ -207,10 +253,10 @@ void mouse_DrawLine(void)
 	printf("已进入鼠标画线模式\n");
 	printf("操作指南：\n");
 	printf("用鼠标先点选起点再点选终点即可连续画线\n");
-	//setcolor(0x555555);
+	//setcolor(0x909090);
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
-	setcolor(0xFFFFFF);
+	setcolor(0x000000);
 	PrintMouseDrawingInsideMenu(0);
 
 	mouse_msg msg;
@@ -237,9 +283,9 @@ void mouse_DrawLine(void)
 				cleardevice();
 				InitUI(0);
 				DrawMenuOutline(1, TOTAL_LN, 1);
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMouseDrawingInsideMenu(0);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				DrawAllPrevShapes(true);
 				break;
@@ -317,27 +363,27 @@ void mouse_DrawLine(void)
 			{
 				InitUI(0);
 				//DrawMenuOutline(1, TOTAL_LN, 1);
-				//setcolor(0xFFFFFF);
+				//setcolor(0x000000);
 				//PrintMouseDrawingInsideMenu(0);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 				{
 				case 0:
 					DrawMenuOutline(1, TOTAL_LN, 1);
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
 					break;
 				case 1:
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
-					setcolor(0x9090FF);
+					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(1);
 					break;
 				case 2:
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
-					setcolor(0x9090FF);
+					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(2);
 				default:
 					break;
@@ -349,7 +395,7 @@ void mouse_DrawLine(void)
 				cleardevice();
 				delay_fps(10000);
 				InitUI(1);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 
 				putpixel(lineStartPositionX, lineStartPositionY, 0xFCFC54);
@@ -363,7 +409,7 @@ void mouse_DrawLine(void)
 				putpixel(msg.x, msg.y + 1, 0xFCFC54);
 				putpixel(msg.x, msg.y - 1, 0xFCFC54);
 				DrawAllPrevShapes(true);
-				setcolor(0x555555);
+				setcolor(0x909090);
 
 				line(lineStartPositionX, lineStartPositionY, msg.x, msg.y);
 			}
@@ -387,10 +433,10 @@ void mouse_DrawRectangle(void)
 	printf("已进入鼠标画空心矩形模式\n");
 	printf("操作指南：\n");
 	printf("用鼠标点选两个对角点即可连续画空矩形\n");
-	//setcolor(0x555555);
+	//setcolor(0x909090);
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
-	setcolor(0xFFFFFF);
+	setcolor(0x000000);
 	PrintMouseDrawingInsideMenu(0);
 	mouse_msg msg;
 
@@ -415,9 +461,9 @@ void mouse_DrawRectangle(void)
 				cleardevice();
 				InitUI(0);
 				DrawMenuOutline(1, TOTAL_LN, 1);
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMouseDrawingInsideMenu(0);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				DrawAllPrevShapes(true);
 				break;
@@ -497,27 +543,27 @@ void mouse_DrawRectangle(void)
 			{
 				InitUI(0);
 				//DrawMenuOutline(1, TOTAL_LN, 1);
-				//setcolor(0xFFFFFF);
+				//setcolor(0x000000);
 				//PrintMouseDrawingInsideMenu(0);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 				{
 				case 0:
 					DrawMenuOutline(1, TOTAL_LN, 1);
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
 					break;
 				case 1:
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
-					setcolor(0x9090FF);
+					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(1);
 					break;
 				case 2:
-					setcolor(0xFFFFFF);
+					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
-					setcolor(0x9090FF);
+					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(2);
 				default:
 					break;
@@ -529,7 +575,7 @@ void mouse_DrawRectangle(void)
 				cleardevice();
 				delay_fps(10000);
 				InitUI(1);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 
 
@@ -544,7 +590,7 @@ void mouse_DrawRectangle(void)
 				putpixel(msg.x, msg.y + 1, 0xFCFC54);
 				putpixel(msg.x, msg.y - 1, 0xFCFC54);
 				DrawAllPrevShapes(true);
-				setcolor(0x555555);
+				setcolor(0x909090);
 
 				rectangle(rectUpLCornerX, rectUpLCornerY, msg.x, msg.y);
 			}

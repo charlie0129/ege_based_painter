@@ -6,7 +6,6 @@ void coord_DrawPolyPrompt(void)
 	const int INPUT_MAX = 800;
 
 	// variables needed for the first prompt
-	bool isInputValid;
 	char str1[255]; // a string to store the input
 	WORD sides;
 
@@ -15,30 +14,38 @@ void coord_DrawPolyPrompt(void)
 	char *readTmp;
 	int numRead[255]; // an array to store the separated inputs
 	int i; // loop controller. I didn't use "for" loop because in this situation it's not a good idea.
-	
-	isInputValid = true;
+	WORD errCode = 0;
+
 
 	// the first prompt starts here
 	// asks the user to input a sides of a polygon
 	do // exits after a valid input
 	{	
-		memset(str1, 0, sizeof(str1));
+		memset(str1, '\0', sizeof(str1));
 
-		if (isInputValid)
+		if (errCode == 0)
 		{
-			inputbox_getline("请按照提示输入", "请输入多边形边数", str1, sizeof(str1) / sizeof(*str1));
+			inputbox_getline("请按照提示输入", 
+				"请输入多边形边数", 
+				str1, 
+				sizeof(str1) / sizeof(*str1));
+			errCode = 0;
 		}
-		else if (!isInputValid)
+		else
 		{
-			inputbox_getline("输入无效！请重新输入", "请输入多边形边数", str1, sizeof(str1) / sizeof(*str1));
+			inputbox_getline("输入无效！请重新输入", 
+				"请输入多边形边数", 
+				str1,
+				sizeof(str1) / sizeof(*str1));
+			errCode = 0;
 		}
 
 
 		// make sure the input is all numbers
 		if (strspn(str1, "0123456789") != strlen(str1))
 		{
-			MessageBox(NULL, TEXT("边数只能包含数字"), NULL, MB_OK);
-			isInputValid = false;
+			MessageBox(NULL, TEXT("边数只能包含数字"), NULL, MB_OK | MB_SYSTEMMODAL);
+			errCode++;
 			continue;
 		}
 
@@ -48,35 +55,38 @@ void coord_DrawPolyPrompt(void)
 		// avoid out-of-range input numbers
 		if (sides < 3)
 		{
-			MessageBox(NULL, TEXT("不能构成多边形"), NULL, MB_OK);
-			isInputValid = false;
+			MessageBox(NULL, TEXT("不能构成多边形"), NULL, MB_OK | MB_SYSTEMMODAL);
+			errCode++;
 			continue;
 		}
-
-
-		isInputValid = true;
 			
 			
 	}
-	while (!isInputValid);
+	while (!(errCode == 0));
 
 
 	// the second prompt starts here
-	isInputValid = true;
 
 	// asks the user to input the coordinates
 	do // exits after a valid input
 	{
 		i = 0; // it is better not to use "for" statment
-		memset(str, 0, sizeof(str));
+		memset(str, '\0', sizeof(str));
 
-		if (isInputValid)
+		if (errCode == 0)
 		{
-			inputbox_getline("请按照提示输入", "请依次输入多边形的各个点(x,y)坐标，用\",\"分开。如: 1,2,3,4,5,6", str, sizeof(str) / sizeof(*str));
+			inputbox_getline("请按照提示输入",
+				"请依次输入多边形的各个点(x,y)坐标，用\",\"分开。如: 1,2,3,4,5,6",
+				str, 
+				sizeof(str) / sizeof(*str));
+			errCode = 0;
 		}
-		else if (!isInputValid)
+		else
 		{
-			inputbox_getline("输入无效！请重新输入", "请依次输入多边形的各个点(x,y)坐标，用\",\"分开。如: 1,2,3,4,5,6", str, sizeof(str) / sizeof(*str));
+			inputbox_getline("输入无效！请重新输入",
+				"请依次输入多边形的各个点(x,y)坐标，用\",\"分开。如: 1,2,3,4,5,6", 
+				str,
+				sizeof(str) / sizeof(*str));
 		}
 
 		readTmp = strtok(str, ","); // separate the input string
@@ -86,16 +96,17 @@ void coord_DrawPolyPrompt(void)
 			// make sure the input is all numbers
 			if (strspn(readTmp, "0123456789") != strlen(readTmp))
 			{
-				MessageBox(NULL, TEXT("坐标只能包含数字"), NULL, MB_OK);
-				isInputValid = false;
+				MessageBox(NULL, TEXT("坐标只能包含数字"), NULL, MB_OK | MB_SYSTEMMODAL);
+				errCode++;
 				break;
+				errCode = 0;
 			}
 
 			// avoid too many input numbers 
 			if (i >= (sides * 2))
 			{
-				MessageBox(NULL, TEXT("坐标个数过多"), NULL, MB_OK);
-				isInputValid = false;
+				MessageBox(NULL, TEXT("坐标个数过多"), NULL, MB_OK | MB_SYSTEMMODAL);
+				errCode++;
 				break;
 			}
 
@@ -105,24 +116,24 @@ void coord_DrawPolyPrompt(void)
 			// avoid out-of-range input numbers
 			if ((numRead[i] > INPUT_MAX) || (numRead[i] < INPUT_MIN))
 			{
-				MessageBox(NULL, TEXT("坐标范围无效"), NULL, MB_OK);
-				isInputValid = false;
+				MessageBox(NULL, TEXT("坐标范围无效"), NULL, MB_OK | MB_SYSTEMMODAL);
+				errCode++;
 				break;
 			}
 
 			i++;
-			isInputValid = true;
 			readTmp = strtok(NULL, ",");
 		}
 
 		// avoid too few input numbers
 		if (i < (sides * 2))
 		{
-			MessageBox(NULL, TEXT("坐标个数过少"), NULL, MB_OK);
-			isInputValid = false;
+			MessageBox(NULL, TEXT("坐标个数过少"), NULL, MB_OK | MB_SYSTEMMODAL);
+			errCode++;
 		}
 	}
-	while (!isInputValid);
+	while (!(errCode == 0));
+
 	fillpoly(sides, numRead );
 	g_nTotalShapes++;
 	shapeData[g_nTotalShapes - 1].shapeType = shape_polygon;
@@ -152,11 +163,11 @@ void coord_DrawPoly(void)
 
 	printf("已进入坐标画多边形模式\n");
 
-	//setcolor(0x555555);
+	//setcolor(0x909090);
 	coord_DrawPolyPrompt();
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
-	setcolor(0xFFFFFF);
+	setcolor(0x000000);
 	PrintCoordDrawingInsideMenu(0);
 	
 	mouse_msg msg;
@@ -192,9 +203,9 @@ void coord_DrawPoly(void)
 				cleardevice();
 				InitUI(0);
 				DrawMenuOutline(1, TOTAL_LN, 1);
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintCoordDrawingInsideMenu(0);
-				setcolor(0x90FF90);
+				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				DrawAllPrevShapes(true);
 				break;
@@ -214,33 +225,33 @@ void coord_DrawPoly(void)
 			
 			InitUI(0);
 			//DrawMenuOutline(1, TOTAL_LN, 1);
-			//setcolor(0xFFFFFF);
+			//setcolor(0x000000);
 			//PrintCoordDrawingInsideMenu(0);
-			setcolor(0x90FF90);
+			setcolor(0x50AA50);
 			xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 0:
 				DrawMenuOutline(1, TOTAL_LN, 1);
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintCoordDrawingInsideMenu(0);
 				break;
 			case 1:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintCoordDrawingInsideMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintCoordDrawingInsideMenu(1);
 				break;
 			case 2:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintCoordDrawingInsideMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintCoordDrawingInsideMenu(2);
 				break;
 			case 3:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintCoordDrawingInsideMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintCoordDrawingInsideMenu(3);
 				break;
 			default:

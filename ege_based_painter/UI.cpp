@@ -43,7 +43,7 @@ void InitUI(short int errCode)
 	tmp_totalShapes = g_nTotalShapes;
 
 	setcaption("CC 画板");
-	setcolor(0x555555);
+	setcolor(0x909090);
 	line(0, 579, 800, 579);
 	line(675, 579, 675, CANVAS_HIGHT);
 	line(142, 579, 142, CANVAS_HIGHT);
@@ -53,28 +53,28 @@ void InitUI(short int errCode)
 
 	if (errCode == 0)
 	{
-		setcolor(0x90FF90);
+		setcolor(0x50AA50);
 		xyprintf(2, 582, "准备就绪");
 	}
 	else
 	{
-		setcolor(0xFFFF90);
+		setcolor(0xAAAA50);
 		xyprintf(2, 582, "正在绘图");
 	}
 
 	if (fileEdited)
 	{
-		setcolor(0xFF9090);
+		setcolor(0xAA5050);
 		xyprintf(67, 582, "更改未保存");
 	}
 	else
 	{
-		setcolor(0x90FF90);
+		setcolor(0x50AA50);
 		xyprintf(67, 582, "更改已保存");
 	}
 
 
-	setcolor(0xFFFFFF);
+	setcolor(0x000000);
 	xyprintf(133 + 16, 582, "提示信息请看控制台");
 	xyprintf(203 + 81, 582, "线: %d", nLines);
 	xyprintf(245 + 81, 582, "圆: %d", nCircles);
@@ -93,7 +93,7 @@ void DrawMenuOutline(WORD lnStart,
 	WORD lnEnd,
 	WORD col)
 {
-	setcolor(0x555555);
+	setcolor(0x909090);
 	// vertical lines
 	for (int j = 0; j <= col; j++)
 	{

@@ -18,11 +18,11 @@ bool ReadFile(void)
 	mouse_msg msg;
 
 	DrawMenuOutline(1, TOTAL_LN, 1);
-	setcolor(0xFFFFFF);
+	setcolor(0x000000);
 	setfont(EGE_FONT_SIZE, 0, EGE_FONT);
 	
-	xyprintf(8, 8 + 0 * MENU_HIGHT, "1. ∂¡»°ªÊÕº¥Êµµ");
-	xyprintf(8, 8 + 1 * MENU_HIGHT, "2. ≤ª∂¡»°ªÊÕº¥Êµµ");
+	xyprintf(8, 8 + 0 * MENU_HIGHT, "∂¡»°ªÊÕº¥Êµµ");
+	xyprintf(8, 8 + 1 * MENU_HIGHT, "≤ª∂¡»°ªÊÕº¥Êµµ");
 	xyprintf(MENU_LENGTH + 15, 8 + 2 * MENU_HIGHT, "”√ Û±Íµ„ª˜≤Àµ•");
 
 
@@ -49,7 +49,7 @@ bool ReadFile(void)
 				ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
 				if (!(GetOpenFileName(&ofn)))
 				{
-					MessageBox(NULL, TEXT("«Î—°‘Ò“ª∏ˆŒƒº˛"), NULL, MB_ICONERROR);
+					MessageBox(NULL, TEXT("«Î—°‘Ò“ª∏ˆŒƒº˛"), NULL, MB_ICONERROR | MB_SYSTEMMODAL);
 					goto case1;
 				}
 
@@ -131,30 +131,30 @@ bool ReadFile(void)
 			}
 			break; // not needed
 		case mouse_msg_move:
-			setcolor(0x90FF90);
+			setcolor(0x50AA50);
 			xyprintf(678, 582, "µ±«∞◊¯±Í: (%03d, %03d)", msg.x, msg.y);
 			DrawMenuOutline(1, TOTAL_LN, 1);
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 0:
 				DrawMenuOutline(1, TOTAL_LN, 1);
-				setcolor(0xFFFFFF);
-				xyprintf(8, 8 + 0 * MENU_HIGHT, "1. ∂¡»°ªÊÕº¥Êµµ");
-				xyprintf(8, 8 + 1 * MENU_HIGHT, "2. ≤ª∂¡»°ªÊÕº¥Êµµ");
+				setcolor(0x000000);
+				xyprintf(8, 8 + 0 * MENU_HIGHT, "∂¡»°ªÊÕº¥Êµµ");
+				xyprintf(8, 8 + 1 * MENU_HIGHT, "≤ª∂¡»°ªÊÕº¥Êµµ");
 				break;
 			case 1:
-				setcolor(0xFFFFFF);
-				xyprintf(8, 8 + 0 * MENU_HIGHT, "1. ∂¡»°ªÊÕº¥Êµµ");
-				xyprintf(8, 8 + 1 * MENU_HIGHT, "2. ≤ª∂¡»°ªÊÕº¥Êµµ");
-				setcolor(0x9090FF);
-				xyprintf(8, 8 + 0 * MENU_HIGHT, "1. ∂¡»°ªÊÕº¥Êµµ");
+				setcolor(0x000000);
+				xyprintf(8, 8 + 0 * MENU_HIGHT, "∂¡»°ªÊÕº¥Êµµ");
+				xyprintf(8, 8 + 1 * MENU_HIGHT, "≤ª∂¡»°ªÊÕº¥Êµµ");
+				setcolor(0x5050AA);
+				xyprintf(8, 8 + 0 * MENU_HIGHT, "∂¡»°ªÊÕº¥Êµµ");
 				break;
 			case 2:
-				setcolor(0xFFFFFF);
-				xyprintf(8, 8 + 0 * MENU_HIGHT, "1. ∂¡»°ªÊÕº¥Êµµ");
-				xyprintf(8, 8 + 1 * MENU_HIGHT, "2. ≤ª∂¡»°ªÊÕº¥Êµµ");
-				setcolor(0x9090FF);
-				xyprintf(8, 8 + 1 * MENU_HIGHT, "2. ≤ª∂¡»°ªÊÕº¥Êµµ");
+				setcolor(0x000000);
+				xyprintf(8, 8 + 0 * MENU_HIGHT, "∂¡»°ªÊÕº¥Êµµ");
+				xyprintf(8, 8 + 1 * MENU_HIGHT, "≤ª∂¡»°ªÊÕº¥Êµµ");
+				setcolor(0x5050AA);
+				xyprintf(8, 8 + 1 * MENU_HIGHT, "≤ª∂¡»°ªÊÕº¥Êµµ");
 				break;
 			default:
 				break;

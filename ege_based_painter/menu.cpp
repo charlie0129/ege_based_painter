@@ -15,7 +15,7 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 
 	const short int TOTAL_LN = 9;
 	DrawMenuOutline(1, TOTAL_LN, 1);
-	setcolor(0xFFFFFF);
+	setcolor(0x000000);
 	PrintMenu(0);
 
 	for (; ; delay_fps(REFRESH_RATE))
@@ -98,70 +98,70 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 			}
 			break; // not needed
 		case mouse_msg_move:
-			setcolor(0x90FF90);
+			setcolor(0x50AA50);
 			xyprintf(678, 582, "µ±Ç°×ø±ê: (%03d, %03d)", msg.x, msg.y);
-			setcolor(0x202030);
+			setcolor(0xDDDDDD);
 			DrawAllPrevShapes(false);
 			DrawMenuOutline(1, TOTAL_LN, 1);
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 0:
 				DrawMenuOutline(1, TOTAL_LN, 1);
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
 				break;
 			case 1:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(1);
 				break;
 			case 2:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(2);
 				break;
 			case 3:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(3);
 				break;
 			case 4:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(4);
 				break;
 			case 5:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(5);
 				break;
 			case 6:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(6);
 				break;
 			case 7:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(7);
 				break;
 			case 8:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(8);
 				break;
 			case 9:
-				setcolor(0xFFFFFF);
+				setcolor(0x000000);
 				PrintMenu(0);
-				setcolor(0x9090FF);
+				setcolor(0x5050AA);
 				PrintMenu(9);
 				break;
 			default:

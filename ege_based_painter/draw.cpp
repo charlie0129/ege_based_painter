@@ -70,7 +70,7 @@ int RandColor(void)
 		randomize();
 		B = random(255);// randInt(0, 255);
 	} 
-	while (R <= 80 && G <= 80 && B <= 80);
+	while ((R >= 180) && (G >= 180) && (B >= 180));
 
 	hexColorValue = (R << 16) + (G << 8) + B; // convert separate RGB channels into a single value that represents colors
 	// printf("%x", hexValue); // display the output value of the function for debug purposes
@@ -84,12 +84,16 @@ void PrintMouseDrawingInsideMenu(WORD lnToPrint)
 	case 0:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "撤销");
+		xyprintf(8, 8 + 2 * MENU_HIGHT, "选择当前前景色");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
 		break;
 	case 2:
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "撤销");
+		break;
+	case 3:
+		xyprintf(8, 8 + 2 * MENU_HIGHT, "选择当前前景色");
 		break;
 	default:
 		break;
@@ -104,6 +108,7 @@ void PrintCoordDrawingInsideMenu(WORD lnToPrint)
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "撤销");
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "再画一个");
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前前景色");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
@@ -113,6 +118,9 @@ void PrintCoordDrawingInsideMenu(WORD lnToPrint)
 		break;
 	case 3:
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "再画一个");
+		break;
+	case 4:
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前前景色");
 		break;
 	default:
 		break;
