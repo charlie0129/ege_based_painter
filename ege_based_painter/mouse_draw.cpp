@@ -4,7 +4,7 @@
 
 void mouse_DrawCircle(WORD nOfShapesToDraw)
 {
-	const short int TOTAL_LN = 3; // total items in the menu bar
+	const short int TOTAL_LN = 4; // total items in the menu bar
 	bool isInProgress = false; // To determine whether the mouse click is the first step or the second step
 	int circleCenterX;
 	int circleCenterY;
@@ -13,9 +13,9 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 	WORD tmpNOfShapes = g_nTotalShapes;
 	
 
-	printf("已进入鼠标画空心圆模式\n");
+	printf("已进入鼠标画圆模式\n");
 	printf("操作指南：\n");
-	printf("用鼠标先点选圆心再点选圆上任意一点即可连续画空心圆\n");
+	printf("用鼠标先点选圆心再点选圆上任意一点即可连续画圆\n");
 	//setcolor(0x909090);
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
@@ -60,7 +60,14 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 				goto move;
 				break;
 			case 3:
-				ChooseColor();
+				ChooseColor_EGE(0);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 4:
+				ChooseColor_EGE(1);
 				cleardevice();
 				InitUI(0);
 				DrawAllPrevShapes(true);
@@ -151,11 +158,26 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = g_customColor;
 				}
-				
+				if (!g_isUserSetFillColor)
+				{
+					shapeData[g_nTotalShapes - 1].isFill = false;
+				}
+				else
+				{
+					shapeData[g_nTotalShapes - 1].isFill = true;
+					if (g_isFillColorRandom)
+					{
+						shapeData[g_nTotalShapes - 1].fillColor = RandColor();
+					}
+					else
+					{
+						shapeData[g_nTotalShapes - 1].fillColor = g_customFillColor;
+					}				
+				}
 				DrawAllPrevShapes(true);
 			
 
-				printf("	已画出以 (%d, %d) 为圆心，(%d, %d) 为圆上一点，半径为 %d 的一个空心圆\n", 
+				printf("	已画出以 (%d, %d) 为圆心，(%d, %d) 为圆上一点，半径为 %d 的一个圆\n", 
 					circleCenterX, 
 					circleCenterY, 
 					circleOuterX, 
@@ -201,6 +223,12 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 					PrintMouseDrawingInsideMenu(0);
 					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(3);
+					break;
+				case 4:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(4);
 					break;
 				default:
 					break;

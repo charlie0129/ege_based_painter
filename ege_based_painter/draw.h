@@ -3,6 +3,7 @@
 
 extern bool g_isUserSetColor; // global variable. used to determine whether the user has set a custom color
 extern bool g_isUserSetFillColor;
+extern bool  g_isFillColorRandom;
 extern int g_customColor;
 extern int g_customFillColor;
 extern WORD g_nTotalShapes;

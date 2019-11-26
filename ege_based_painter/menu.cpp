@@ -61,7 +61,7 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 			case 5:
 				cleardevice();
 				InitUI(0);
-				ChooseColor();
+				ChooseColor_EGE(0);
 				cleardevice();
 				InitUI(0);
 				break;

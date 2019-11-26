@@ -12,7 +12,14 @@ void DrawAllPrevShapes(bool withColor)
 			if (withColor)
 			{
 				setcolor(shapeData[i].foregroundColor);
-				//setfillcolor(shapeData[i].fillColor);
+				if (shapeData[i].isFill)
+				{
+					setfillcolor(shapeData[i].fillColor);
+				}
+				else
+				{
+					setfillcolor(WHITE);
+				}
 			}
 
 			switch (shapeData[i].shapeType)
@@ -32,10 +39,23 @@ void DrawAllPrevShapes(bool withColor)
 					   shapeData[i].coords[0].y, 
 					   (int)sqrt(pow(shapeData[i].coords[0].x - shapeData[i].coords[1].x, 2) +
 						         pow(shapeData[i].coords[0].y - shapeData[i].coords[1].y, 2)));*/
-				circle(((shapeData + i)->coords)->x, 
-					((shapeData + i)->coords)->y, 
-					(int)sqrt(pow(((shapeData + i)->coords)->x - ((shapeData + i)->coords + 1)->x, 2) +
-						      pow(((shapeData + i)->coords)->y - ((shapeData + i)->coords + 1)->y, 2)));
+				if (shapeData[i].isFill)
+				{
+					pieslice(((shapeData + i)->coords)->x,
+						((shapeData + i)->coords)->y,
+						0,
+						360,
+						(int)sqrt(pow(((shapeData + i)->coords)->x - ((shapeData + i)->coords + 1)->x, 2) +
+							pow(((shapeData + i)->coords)->y - ((shapeData + i)->coords + 1)->y, 2)));
+				}
+				else
+				{
+					circle(((shapeData + i)->coords)->x,
+						((shapeData + i)->coords)->y,
+						(int)sqrt(pow(((shapeData + i)->coords)->x - ((shapeData + i)->coords + 1)->x, 2) +
+							pow(((shapeData + i)->coords)->y - ((shapeData + i)->coords + 1)->y, 2)));
+				}
+				
 				break;
 			case shape_rectangle:
 				rectangle(((shapeData + i)->coords)->x,
@@ -61,7 +81,7 @@ void DrawAllPrevShapes(bool withColor)
 				//coordData[shapeData[i].extraData[0] * 2] = shapeData[i].coords[0].x;
 				//coordData[shapeData[i].extraData[0] * 2 + 1] = shapeData[i].coords[0].y;
 				//setfillcolor(0xAAAAAA);
-				fillpoly(*((shapeData + i)->extraData), coordData);
+				drawpoly(*((shapeData + i)->extraData), coordData);
 				break;
 			default:
 				break;
@@ -102,6 +122,7 @@ void PrintMouseDrawingInsideMenu(WORD lnToPrint)
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "撤销");
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "选择当前前景色");
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前填充色");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
@@ -111,6 +132,9 @@ void PrintMouseDrawingInsideMenu(WORD lnToPrint)
 		break;
 	case 3:
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "选择当前前景色");
+		break;
+	case 4:
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前填充色");
 		break;
 	default:
 		break;
