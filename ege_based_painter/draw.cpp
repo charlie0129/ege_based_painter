@@ -2,7 +2,7 @@
 
 void DrawAllPrevShapes(bool withColor)
 {
-	int coordData[255];
+	int coordData[255] = { 0 };
 	// stops if there is no shapes
 	if (g_nTotalShapes > 0)
 	{
@@ -18,33 +18,50 @@ void DrawAllPrevShapes(bool withColor)
 			switch (shapeData[i].shapeType)
 			{
 			case shape_line:
-				line(shapeData[i].coords[0].x,
+				/*line(shapeData[i].coords[0].x,
 					shapeData[i].coords[0].y,
 					shapeData[i].coords[1].x,
-					shapeData[i].coords[1].y);
+					shapeData[i].coords[1].y);*/
+				line(((shapeData + i)->coords)->x,
+					((shapeData + i)->coords)->y,
+					((shapeData + i)->coords + 1)->x,
+					((shapeData + i)->coords + 1)->y);
 				break;
 			case shape_circle:			
-				circle(shapeData[i].coords[0].x, 
+				/*circle(shapeData[i].coords[0].x, 
 					   shapeData[i].coords[0].y, 
 					   (int)sqrt(pow(shapeData[i].coords[0].x - shapeData[i].coords[1].x, 2) +
-						         pow(shapeData[i].coords[0].y - shapeData[i].coords[1].y, 2)));
+						         pow(shapeData[i].coords[0].y - shapeData[i].coords[1].y, 2)));*/
+				circle(((shapeData + i)->coords)->x, 
+					((shapeData + i)->coords)->y, 
+					(int)sqrt(pow(((shapeData + i)->coords)->x - ((shapeData + i)->coords + 1)->x, 2) +
+						      pow(((shapeData + i)->coords)->y - ((shapeData + i)->coords + 1)->y, 2)));
 				break;
 			case shape_rectangle:
-				rectangle(shapeData[i].coords[0].x,
-					shapeData[i].coords[0].y,
-					shapeData[i].coords[1].x,
-					shapeData[i].coords[1].y);
+				rectangle(((shapeData + i)->coords)->x,
+					((shapeData + i)->coords)->y,
+					((shapeData + i)->coords + 1)->x,
+					((shapeData + i)->coords + 1)->y);
 				break;
 			case shape_polygon:
-				for (int j = 0; j < shapeData[i].extraData[0]; j++)
+				//for (int j = 0; j < shapeData[i].extraData[0]; j++)
+				//{
+				//	coordData[2 * j] = shapeData[i].coords[j].x;
+				//	coordData[2 * j + 1] = shapeData[i].coords[j].y;
+				//}
+				////coordData[shapeData[i].extraData[0] * 2] = shapeData[i].coords[0].x;
+				////coordData[shapeData[i].extraData[0] * 2 + 1] = shapeData[i].coords[0].y;
+				////setfillcolor(0xAAAAAA);
+				//fillpoly(shapeData[i].extraData[0], coordData);
+				for (int j = 0; j < *((shapeData + i)->extraData); j++)
 				{
-					coordData[2 * j] = shapeData[i].coords[j].x;
-					coordData[2 * j + 1] = shapeData[i].coords[j].y;
+					*(coordData + 2 * j) = ((shapeData + i)->coords + j)->x;
+					*(coordData + 2 * j + 1) = ((shapeData + i)->coords + j)->y;
 				}
 				//coordData[shapeData[i].extraData[0] * 2] = shapeData[i].coords[0].x;
 				//coordData[shapeData[i].extraData[0] * 2 + 1] = shapeData[i].coords[0].y;
 				//setfillcolor(0xAAAAAA);
-				fillpoly(shapeData[i].extraData[0], coordData);
+				fillpoly(*((shapeData + i)->extraData), coordData);
 				break;
 			default:
 				break;
@@ -70,7 +87,7 @@ int RandColor(void)
 		randomize();
 		B = random(255);// randInt(0, 255);
 	} 
-	while ((R >= 180) && (G >= 180) && (B >= 180));
+	while ((R >= 180) || (G >= 180) || (B >= 180));
 
 	hexColorValue = (R << 16) + (G << 8) + B; // convert separate RGB channels into a single value that represents colors
 	// printf("%x", hexValue); // display the output value of the function for debug purposes

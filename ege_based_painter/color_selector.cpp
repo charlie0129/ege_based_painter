@@ -58,44 +58,44 @@ void ChooseColor(void)
 				hasSetColor = true;
 				g_isUserSetColor = true;
 				g_customColor = colorInf[0];
-				printf("		已将前景色设置为蓝色\n");
+				printf("		已设置为蓝色\n");
 				break;
 			case 3:
 				hasSetColor = true;
 				g_isUserSetColor = true;
 				g_customColor = colorInf[1];
-				printf("		已将前景色设置为绿色\n");
+				printf("		已设置为绿色\n");
 
 				break;
 			case 4:
 				hasSetColor = true;
 				g_isUserSetColor = true;
 				g_customColor = colorInf[2];
-				printf("		已将前景色设置为青色\n");
+				printf("		已设置为青色\n");
 				break;
 			case 5:
 				hasSetColor = true;
 				g_isUserSetColor = true;
 				g_customColor = colorInf[3];
-				printf("		已将前景色设置为红色\n");
+				printf("		已设置为红色\n");
 				break;
 			case 6:
 				hasSetColor = true;
 				g_isUserSetColor = true;
 				g_customColor = colorInf[4];
-				printf("		已将前景色设置为紫色\n");
+				printf("		已设置为紫色\n");
 				break;
 			case 7:
 				hasSetColor = true;
 				g_isUserSetColor = true;
 				g_customColor = colorInf[5];
-				printf("		已将前景色设置为黄色\n");
+				printf("		已设置为黄色\n");
 				break;
 			case 8:
 				hasSetColor = true;
 				g_isUserSetColor = true;
 				g_customColor = colorInf[6];
-				printf("		已将前景色设置为灰色\n");
+				printf("		已设置为灰色\n");
 				break;
 			case 9:
 				hasSetColor = true;
@@ -154,12 +154,12 @@ void ChooseColor(void)
 				} while (!isInputValid);
 
 				g_customColor = EGERGB(numRead[0], numRead[1], numRead[2]);
-				printf("		已将前景色设置为 #%02X%02X%02X 色\n", numRead[0], numRead[1], numRead[2]);
+				printf("		已设置为 #%02X%02X%02X 色\n", numRead[0], numRead[1], numRead[2]);
 				break;
 			case 10:
 				hasSetColor = true;
 				g_isUserSetColor = false;
-				printf("		已将前景色设置为随机色\n");
+				printf("		已设置为随机色\n");
 				break;
 			default:
 				break;
