@@ -25,7 +25,7 @@ int main(void)
 	//setrendermode(RENDER_AUTO);
 	setbkcolor(WHITE);
 	setfont(EGE_FONT_SIZE, 0, EGE_FONT);
-	Menu(ReadFile(), 512);
+	Menu(ReadFile());
 	return 0;
 }
 

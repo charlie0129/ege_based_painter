@@ -21,6 +21,11 @@ void DrawAllPrevShapes(bool withColor)
 					setfillcolor(WHITE);
 				}
 			}
+			else
+			{
+				setcolor(0xDDDDDD);
+				setfillcolor(0xDDDDDD);
+			}
 
 			switch (shapeData[i].shapeType)
 			{

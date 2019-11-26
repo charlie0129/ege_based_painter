@@ -1,7 +1,7 @@
 #include "menu.h"
 
 
-void Menu(bool readResult, WORD nOfShapesToDraw)
+void Menu(bool readResult)
 {
 	WORD tmpNOfShapes = g_nTotalShapes;
 
@@ -13,17 +13,13 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 
 
 
-	const short int TOTAL_LN = 9;
+	const short int TOTAL_LN = 7;
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0x000000);
 	PrintMenu(0);
 
 	for (; ; delay_fps(REFRESH_RATE))
 	{
-		if (!(g_nTotalShapes - nOfShapesToDraw < tmpNOfShapes))
-		{
-			return;
-		}
 
 		msg = getmouse();
 
@@ -51,42 +47,25 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 			case 4:
 				cleardevice();
 				InitUI(0);
-
-
-
-
+				mouse_DrawLine();
 				cleardevice();
 				InitUI(0);
 				break;
 			case 5:
 				cleardevice();
 				InitUI(0);
-				ChooseColor_EGE(0);
+				mouse_DrawCircle();
 				cleardevice();
 				InitUI(0);
 				break;
 			case 6:
 				cleardevice();
 				InitUI(0);
-				mouse_DrawLine();
-				cleardevice();
-				InitUI(0);
-				break;
-			case 7:
-				cleardevice();
-				InitUI(0);
-				mouse_DrawCircle(nOfShapesToDraw);
-				cleardevice();
-				InitUI(0);
-				break;
-			case 8:
-				cleardevice();
-				InitUI(0);
 				mouse_DrawRectangle();
 				cleardevice();
 				InitUI(0);
 				break;
-			case 9:
+			case 7:
 				cleardevice();
 				InitUI(0);
 				coord_DrawPoly();
@@ -100,7 +79,6 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 		case mouse_msg_move:
 			setcolor(0x50AA50);
 			xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
-			setcolor(0xDDDDDD);
 			DrawAllPrevShapes(false);
 			DrawMenuOutline(1, TOTAL_LN, 1);
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
@@ -152,18 +130,6 @@ void Menu(bool readResult, WORD nOfShapesToDraw)
 				setcolor(0x5050AA);
 				PrintMenu(7);
 				break;
-			case 8:
-				setcolor(0x000000);
-				PrintMenu(0);
-				setcolor(0x5050AA);
-				PrintMenu(8);
-				break;
-			case 9:
-				setcolor(0x000000);
-				PrintMenu(0);
-				setcolor(0x5050AA);
-				PrintMenu(9);
-				break;
 			default:
 				break;
 			}
@@ -191,12 +157,10 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "退出");
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "另存为");
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "清除所有图形");
-		xyprintf(8, 8 + 3 * MENU_HIGHT, "重画单个");
-		xyprintf(8, 8 + 4 * MENU_HIGHT, "选择颜色");
-		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画线");
-		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画空心圆");
-		xyprintf(8, 8 + 7 * MENU_HIGHT, "用鼠标画空心矩形");
-		xyprintf(8, 8 + 8 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "用鼠标画线");
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画空心圆");
+		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画空心矩形");
+		xyprintf(8, 8 + 6 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "退出");
@@ -208,22 +172,16 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "清除所有图形");
 		break;
 	case 4:
-		xyprintf(8, 8 + 3 * MENU_HIGHT, "重画单个");
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "用鼠标画线");
 		break;
 	case 5:
-		xyprintf(8, 8 + 4 * MENU_HIGHT, "选择颜色");
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画空心圆");
 		break;
 	case 6:
-		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画线");
+		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画空心矩形");
 		break;
 	case 7:
-		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画空心圆");
-		break;
-	case 8:
-		xyprintf(8, 8 + 7 * MENU_HIGHT, "用鼠标画空心矩形");
-		break;
-	case 9:
-		xyprintf(8, 8 + 8 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
+		xyprintf(8, 8 + 6 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
 		break;
 	default:
 		break;

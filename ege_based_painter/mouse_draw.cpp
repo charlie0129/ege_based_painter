@@ -2,7 +2,7 @@
 
 
 
-void mouse_DrawCircle(WORD nOfShapesToDraw)
+void mouse_DrawCircle(void)
 {
 	const short int TOTAL_LN = 4; // total items in the menu bar
 	bool isInProgress = false; // To determine whether the mouse click is the first step or the second step
@@ -108,8 +108,7 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 			}*/
 
 			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
-			if (!isInProgress && 
-				(g_nTotalShapes - nOfShapesToDraw < tmpNOfShapes))
+			if (!isInProgress)
 			{
 				circleCenterX = msg.x;
 				circleCenterY = msg.y;
@@ -128,8 +127,7 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 			}
 
 			/* if the mouse click indicates the first dot, store the position data of another dot on the circle */
-			if (isInProgress &&
-				(g_nTotalShapes - nOfShapesToDraw < tmpNOfShapes))
+			if (isInProgress)
 			{
 
 				circleOuterX = msg.x;
@@ -270,7 +268,7 @@ void mouse_DrawCircle(WORD nOfShapesToDraw)
 
 void mouse_DrawLine(void)
 {
-	const short int TOTAL_LN = 2;
+	const short int TOTAL_LN = 4;
 	bool isInProgress = false;; // To determine whether the mouse click is the first step or the second step
 	int lineStartPositionX;
 	int lineStartPositionY;
@@ -298,8 +296,12 @@ void mouse_DrawLine(void)
 		{
 		case mouse_msg_down:
 
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2)
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
+			case 1:
+				return;
+				break;
+			case 2:
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -316,12 +318,24 @@ void mouse_DrawLine(void)
 				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				DrawAllPrevShapes(true);
+				goto move;
 				break;
-			}
-
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
-			{
-				return;
+			case 3:
+				ChooseColor_EGE(0);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 4:
+				ChooseColor_EGE(1);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			default:
+				break;
 			}
 
 
@@ -386,7 +400,7 @@ void mouse_DrawLine(void)
 			}
 			break; // not needed
 		case mouse_msg_move:
-
+			move:
 			if (!isInProgress)
 			{
 				InitUI(0);
@@ -413,6 +427,19 @@ void mouse_DrawLine(void)
 					PrintMouseDrawingInsideMenu(0);
 					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(2);
+					break;
+				case 3:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(3);
+					break;
+				case 4:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(4);
+					break;
 				default:
 					break;
 				}
@@ -451,16 +478,16 @@ void mouse_DrawLine(void)
 
 void mouse_DrawRectangle(void)
 {
-	const short int TOTAL_LN = 2; // total items in the menu bar
+	const short int TOTAL_LN = 4; // total items in the menu bar
 	bool isInProgress = false; // To determine whether the mouse click is the first step or the second step
 	int rectUpLCornerX;
 	int rectUpLCornerY;
 	int	rectLowRCornerX;
 	int rectLowRCornerY;
 
-	printf("已进入鼠标画空心矩形模式\n");
+	printf("已进入鼠标画矩形模式\n");
 	printf("操作指南：\n");
-	printf("用鼠标点选两个对角点即可连续画空矩形\n");
+	printf("用鼠标点选两个对角点即可连续画矩形\n");
 	//setcolor(0x909090);
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
@@ -476,8 +503,12 @@ void mouse_DrawRectangle(void)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
+			case 1:
+				return;
+				break;
+			case 2:
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -494,12 +525,24 @@ void mouse_DrawRectangle(void)
 				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				DrawAllPrevShapes(true);
+				goto move;
 				break;
-			}
-
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
-			{
-				return;
+			case 3:
+				ChooseColor_EGE(0);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 4:
+				ChooseColor_EGE(1);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			default:
+				break;
 			}
 
 			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
@@ -551,6 +594,22 @@ void mouse_DrawRectangle(void)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = g_customColor;
 				}
+				if (!g_isUserSetFillColor)
+				{
+					shapeData[g_nTotalShapes - 1].isFill = false;
+				}
+				else
+				{
+					shapeData[g_nTotalShapes - 1].isFill = true;
+					if (g_isFillColorRandom)
+					{
+						shapeData[g_nTotalShapes - 1].fillColor = RandColor();
+					}
+					else
+					{
+						shapeData[g_nTotalShapes - 1].fillColor = g_customFillColor;
+					}
+				}
 
 				DrawAllPrevShapes(true);
 
@@ -566,7 +625,7 @@ void mouse_DrawRectangle(void)
 			}
 			break; // not needed
 		case mouse_msg_move:
-
+			move:
 			if (!isInProgress)
 			{
 				InitUI(0);
@@ -593,6 +652,18 @@ void mouse_DrawRectangle(void)
 					PrintMouseDrawingInsideMenu(0);
 					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(2);
+				case 3:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(3);
+					break;
+				case 4:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(4);
+					break;
 				default:
 					break;
 				}

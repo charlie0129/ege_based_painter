@@ -8,5 +8,5 @@
 
 extern WORD g_nTotalShapes;
 
-void Menu(bool readResult, WORD nOfShapesToDraw);
+void Menu(bool readResult);
 void PrintMenu(short int lnToPrint);
