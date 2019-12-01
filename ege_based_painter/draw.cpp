@@ -63,10 +63,24 @@ void DrawAllPrevShapes(bool withColor)
 				
 				break;
 			case shape_rectangle:
-				rectangle(((shapeData + i)->coords)->x,
+				if (shapeData[i].isFill)
+				{
+					bar(((shapeData + i)->coords)->x,
+						((shapeData + i)->coords)->y,
+						((shapeData + i)->coords + 1)->x,
+						((shapeData + i)->coords + 1)->y);
+				}
+				else
+				{
+					rectangle(((shapeData + i)->coords)->x,
+						((shapeData + i)->coords)->y,
+						((shapeData + i)->coords + 1)->x,
+						((shapeData + i)->coords + 1)->y);
+				}
+				/*rectangle(((shapeData + i)->coords)->x,
 					((shapeData + i)->coords)->y,
 					((shapeData + i)->coords + 1)->x,
-					((shapeData + i)->coords + 1)->y);
+					((shapeData + i)->coords + 1)->y);*/
 				break;
 			case shape_polygon:
 				//for (int j = 0; j < shapeData[i].extraData[0]; j++)
@@ -127,7 +141,7 @@ void PrintMouseDrawingInsideMenu(WORD lnToPrint)
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "撤销");
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "选择当前前景色");
-		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前填充色");
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "设置填充并选择填充色");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
@@ -139,7 +153,7 @@ void PrintMouseDrawingInsideMenu(WORD lnToPrint)
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "选择当前前景色");
 		break;
 	case 4:
-		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前填充色");
+		xyprintf(8, 8 + 3 * MENU_HIGHT, "设置填充并选择填充色");
 		break;
 	default:
 		break;
