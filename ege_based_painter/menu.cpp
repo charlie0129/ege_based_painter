@@ -33,6 +33,7 @@ void Menu(bool readResult)
 				break;
 			case 2:
 				SaveFile();
+				goto move;
 				break;
 			case 3:
 				
@@ -43,6 +44,7 @@ void Menu(bool readResult)
 					MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
 				InitUI(0);
 				ClearData();
+				goto move;
 				break;
 			case 4:
 				cleardevice();
@@ -50,6 +52,7 @@ void Menu(bool readResult)
 				mouse_DrawLine();
 				cleardevice();
 				InitUI(0);
+				goto move;
 				break;
 			case 5:
 				cleardevice();
@@ -57,6 +60,7 @@ void Menu(bool readResult)
 				mouse_DrawCircle();
 				cleardevice();
 				InitUI(0);
+				goto move;
 				break;
 			case 6:
 				cleardevice();
@@ -64,6 +68,7 @@ void Menu(bool readResult)
 				mouse_DrawRectangle();
 				cleardevice();
 				InitUI(0);
+				goto move;
 				break;
 			case 7:
 				cleardevice();
@@ -71,12 +76,14 @@ void Menu(bool readResult)
 				coord_DrawPoly();
 				cleardevice();
 				InitUI(0);
+				goto move;
 				break;
 			default:
 				break;
 			}
 			break; // not needed
 		case mouse_msg_move:
+			move:
 			setcolor(0x50AA50);
 			xyprintf(678, 582, "µ±Ç°×ø±ê: (%03d, %03d)", msg.x, msg.y);
 			DrawAllPrevShapes(false);

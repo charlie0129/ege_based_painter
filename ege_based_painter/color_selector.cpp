@@ -63,6 +63,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = colorInf[0];
 				}				
@@ -77,6 +78,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = colorInf[1];
 				}
@@ -92,6 +94,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = colorInf[2];
 				}
@@ -106,6 +109,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = colorInf[3];
 				}
@@ -120,6 +124,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = colorInf[4];
 				}
@@ -134,6 +139,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = colorInf[5];
 				}
@@ -148,6 +154,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = colorInf[6];
 				}
@@ -214,6 +221,7 @@ void ChooseColor_EGE(WORD mode)
 				}
 				else
 				{
+					g_isFillColorRandom = false;
 					g_isUserSetFillColor = true;
 					g_customFillColor = EGERGB(numRead[0], numRead[1], numRead[2]);
 				}
