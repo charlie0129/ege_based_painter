@@ -48,6 +48,7 @@ void InitUI(short int errCode)
 	line(675, 579, 675, CANVAS_HIGHT);
 	line(142, 579, 142, CANVAS_HIGHT);
 	line(280, 579, 280, CANVAS_HIGHT);
+	line(500, 579, 500, CANVAS_HIGHT);
 	line(62, 579, 62, CANVAS_HIGHT);
 	line(10 + MENU_LENGTH, 1, 10 + MENU_LENGTH, 579);
 
@@ -76,10 +77,42 @@ void InitUI(short int errCode)
 
 	setcolor(0x000000);
 	xyprintf(133 + 16, 582, "提示信息请看控制台");
+
 	xyprintf(203 + 81, 582, "线: %d", nLines);
 	xyprintf(245 + 81, 582, "圆: %d", nCircles);
 	xyprintf(287 + 81, 582, "矩形: %d", nRectangles);
 	xyprintf(343 + 81, 582, "多边形: %d", nPolygons);
+
+	xyprintf(505, 582, "前景:");
+	if (g_isUserSetColor)
+	{
+		setfillcolor(g_customColor);
+		bar(540, 585, 552, 597);
+	}
+	else
+	{
+		setcolor(0x000000);
+		xyprintf(540, 582, "随机");
+	}
+	xyprintf(585, 582, "填充:");
+	if (g_isUserSetFillColor)
+	{
+		if (g_isFillColorRandom)
+		{
+			setcolor(0x000000);
+			xyprintf(620, 582, "随机");
+		}
+		else
+		{
+			setfillcolor(g_customFillColor);
+			bar(620, 585, 632, 597);
+		}
+	}
+	else
+	{
+		setcolor(0x000000);
+		xyprintf(620, 582, "无");
+	}
 }
 
 void ClearData(void)
