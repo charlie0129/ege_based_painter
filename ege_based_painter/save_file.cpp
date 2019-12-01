@@ -9,7 +9,7 @@ void SaveFile(void)
 	char c_strFilename[MAX_PATH] = { 0 };
 	ofn.lStructSize = sizeof(OPENFILENAME);
 	ofn.hwndOwner = NULL;
-	ofn.lpstrFilter = TEXT("*.draw\0\0");
+	ofn.lpstrFilter = TEXT("Shape Data (*.draw)\0*.draw\0All (*.*)\0*.*\0\0");
 	ofn.nFilterIndex = 1;//过滤器索引
 	ofn.lpstrFile = strFilename;
 	ofn.nMaxFile = sizeof(strFilename);
@@ -19,8 +19,7 @@ void SaveFile(void)
 	ofn.lpstrDefExt = TEXT("draw");
 	if (!(GetSaveFileName(&ofn)))
 	{
-		MessageBox(NULL, TEXT("请输入一个文件名"), NULL, MB_ICONERROR);
-		goto reopen;
+		return;
 	}
 
 	TCHARToChar(strFilename, c_strFilename);

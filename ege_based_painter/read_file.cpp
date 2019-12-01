@@ -10,7 +10,7 @@ bool ReadFile(void)
 	OPENFILENAME    ofn = { 0 };
 	TCHAR           strFilename[MAX_PATH] = { 0 };
 	char            c_strFilename[MAX_PATH] = { 0 };
-
+	begin:
 	cleardevice();
 	InitUI(0);
 	printf("请在菜单界面用鼠标点击操作\n");
@@ -40,7 +40,7 @@ bool ReadFile(void)
 			case1:				
 				ofn.lStructSize = sizeof(OPENFILENAME);
 				ofn.hwndOwner = NULL;
-				ofn.lpstrFilter = TEXT("*.draw\0\0");
+				ofn.lpstrFilter = TEXT("Shape Data (*.draw)\0*.draw\0All (*.*)\0*.*\0\0");
 				ofn.nFilterIndex = 1;
 				ofn.lpstrFile = strFilename;
 				ofn.nMaxFile = sizeof(strFilename);
@@ -49,8 +49,8 @@ bool ReadFile(void)
 				ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
 				if (!(GetOpenFileName(&ofn)))
 				{
-					MessageBox(NULL, TEXT("请选择一个文件"), NULL, MB_ICONERROR | MB_SYSTEMMODAL);
-					goto case1;
+					
+					goto begin;
 				}
 
 				TCHARToChar(strFilename, c_strFilename);
