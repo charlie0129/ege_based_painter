@@ -183,7 +183,7 @@ void mouse_DrawCircle(void)
 					(int)sqrt(pow(shapeData[g_nTotalShapes - 1].coords[0].x - shapeData[g_nTotalShapes - 1].coords[1].x, 2) +
 							  pow(shapeData[g_nTotalShapes - 1].coords[0].y - shapeData[g_nTotalShapes - 1].coords[1].y, 2)));
 				isInProgress = false;
-
+				goto move;
 				break;
 			}
 			break; // not needed
@@ -395,7 +395,7 @@ void mouse_DrawLine(void)
 
 
 				isInProgress = false; // reset the drawing process
-
+				goto move;
 				break;
 			}
 			break; // not needed
@@ -620,7 +620,7 @@ void mouse_DrawRectangle(void)
 					rectLowRCornerX,
 					rectLowRCornerY);
 				isInProgress = false;
-
+				goto move;
 				break;
 			}
 			break; // not needed
