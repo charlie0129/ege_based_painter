@@ -154,8 +154,8 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "另存为");
 		xyprintf(8, 8 + 2 * MENU_HIGHT, "清除所有图形");
 		xyprintf(8, 8 + 3 * MENU_HIGHT, "用鼠标画线");
-		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画空心圆");
-		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画空心矩形");
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画圆");
+		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画矩形");
 		xyprintf(8, 8 + 6 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
 		break;
 	case 1:
@@ -171,10 +171,10 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 3 * MENU_HIGHT, "用鼠标画线");
 		break;
 	case 5:
-		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画空心圆");
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画圆");
 		break;
 	case 6:
-		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画空心矩形");
+		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画矩形");
 		break;
 	case 7:
 		xyprintf(8, 8 + 6 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
