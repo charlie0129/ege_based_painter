@@ -2,13 +2,14 @@
 
 void DrawAllPrevShapes(bool withColor)
 {
-	int coordData[255] = { 0 };
+	int coordData[255] = { 0 }; // coordinate data used for polygon drawing
 	// stops if there is no shapes
 	if (g_nTotalShapes > 0)
 	{
 		// draw shapes one by one
 		for (int i = 0; i < g_nTotalShapes; i++)
 		{
+			// set foreground color and fill color
 			if (withColor)
 			{
 				setcolor(shapeData[i].foregroundColor);
@@ -44,7 +45,7 @@ void DrawAllPrevShapes(bool withColor)
 					   shapeData[i].coords[0].y, 
 					   (int)sqrt(pow(shapeData[i].coords[0].x - shapeData[i].coords[1].x, 2) +
 						         pow(shapeData[i].coords[0].y - shapeData[i].coords[1].y, 2)));*/
-				if (shapeData[i].isFill)
+				if (shapeData[i].isFill) 
 				{
 					pieslice(((shapeData + i)->coords)->x,
 						((shapeData + i)->coords)->y,
@@ -92,6 +93,8 @@ void DrawAllPrevShapes(bool withColor)
 				////coordData[shapeData[i].extraData[0] * 2 + 1] = shapeData[i].coords[0].y;
 				////setfillcolor(0xAAAAAA);
 				//fillpoly(shapeData[i].extraData[0], coordData);
+
+				// prepare the data in shapeData for drawing
 				for (int j = 0; j < *((shapeData + i)->extraData); j++)
 				{
 					*(coordData + 2 * j) = ((shapeData + i)->coords + j)->x;
@@ -99,9 +102,7 @@ void DrawAllPrevShapes(bool withColor)
 				}
 				*(coordData + 2 * (*((shapeData + i)->extraData))) = ((shapeData + i)->coords)->x;
 				*(coordData + 2 * (*((shapeData + i)->extraData)) + 1) = ((shapeData + i)->coords)->y;
-				//coordData[shapeData[i].extraData[0] * 2] = shapeData[i].coords[0].x;
-				//coordData[shapeData[i].extraData[0] * 2 + 1] = shapeData[i].coords[0].y;
-				//setfillcolor(0xAAAAAA);
+
 				if (shapeData[i].isFill)
 				{
 					fillpoly(*((shapeData + i)->extraData), coordData);
@@ -114,12 +115,9 @@ void DrawAllPrevShapes(bool withColor)
 				break;
 			default:
 				break;
-			}
-
-			
-		}
-	}
-
+			} // end of switch
+		} // end of for
+	} // end of if
 }
 
 int RandColor(void)

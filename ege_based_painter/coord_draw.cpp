@@ -6,15 +6,15 @@ void coord_DrawPolyPrompt(void)
 	const int INPUT_MAX = 800;
 
 	// variables needed for the first prompt
-	char str1[255]; // a string to store the input
-	WORD sides;
+	char      str1[255]; // a string to store the input
+	WORD      sides;
 
 	// variables needed for the second prompt
-	char str[511]; // a string to store the input
-	char *readTmp;
-	int numRead[255]; // an array to store the separated inputs
-	int i; // loop controller. I didn't use "for" loop because in this situation it's not a good idea.
-	WORD errCode = 0;
+	char      str[511]; // a string to store the input
+	char      *readTmp;
+	int       numRead[255]; // an array to store the separated inputs
+	int       i; // loop controller. I didn't use "for" loop because in this situation it's not a good idea.
+	WORD      errCode = 0;
 
 
 	// the first prompt starts here
@@ -40,7 +40,6 @@ void coord_DrawPolyPrompt(void)
 			errCode = 0;
 		}
 
-
 		// make sure the input is all numbers
 		if (strspn(str1, "0123456789") != strlen(str1))
 		{
@@ -64,9 +63,7 @@ void coord_DrawPolyPrompt(void)
 	}
 	while (!(errCode == 0));
 
-
 	// the second prompt starts here
-
 	// asks the user to input the coordinates
 	do // exits after a valid input
 	{
@@ -138,6 +135,8 @@ void coord_DrawPolyPrompt(void)
 	g_nTotalShapes++;
 	shapeData[g_nTotalShapes - 1].shapeType = shape_polygon;
 	shapeData[g_nTotalShapes - 1].extraData[0] = sides; // record the sides
+
+	// prepare the coordinate data for storage
 	for (int j = 0; j < shapeData[g_nTotalShapes - 1].extraData[0]; j++)
 	{
 		shapeData[g_nTotalShapes - 1].coords[j].x = numRead[2 * j];
@@ -173,25 +172,17 @@ void coord_DrawPolyPrompt(void)
 void coord_DrawPoly(void)
 {
 	const short int TOTAL_LN = 5; // total items in the menu bar
-
-	bool isInProgress = false;
-
+	bool            isInProgress = false;
 
 	printf("已进入坐标画多边形模式\n");
-
-	//setcolor(0x909090);
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0x000000);
-	PrintCoordDrawingInsideMenu(0);
-	
+	PrintCoordDrawingInsideMenu(0);	
 	mouse_msg msg;
-
-
 
 	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
-
 		msg = getmouse();
 
 		switch (msg.msg)
@@ -244,12 +235,6 @@ void coord_DrawPoly(void)
 			default:
 				break;
 			}
-
-			
-		
-
-
-
 			break; // not needed
 		case mouse_msg_move:
 			move:
@@ -301,7 +286,6 @@ void coord_DrawPoly(void)
 			default:
 				break;
 			}
-
 			break;
 		default:
 			break;

@@ -5,36 +5,28 @@
 void mouse_DrawCircle(void)
 {
 	const short int TOTAL_LN = 4; // total items in the menu bar
-	bool isInProgress = false; // To determine whether the mouse click is the first step or the second step
-	int circleCenterX;
-	int circleCenterY;
-	int	circleOuterX;
-	int circleOuterY;
-	WORD tmpNOfShapes = g_nTotalShapes;
+	bool            isInProgress = false; // To determine whether the mouse click is the first step or the second step
+	int             circleCenterX;
+	int             circleCenterY;
+	int            	circleOuterX;
+	int             circleOuterY;
 	
-
 	printf("已进入鼠标画圆模式\n");
 	printf("操作指南：\n");
 	printf("用鼠标先点选圆心再点选圆上任意一点即可连续画圆\n");
-	//setcolor(0x909090);
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0x000000);
 	PrintMouseDrawingInsideMenu(0);
-
 	mouse_msg msg;
-
-	
 
 	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
-
 		msg = getmouse();
 	
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1:
@@ -77,36 +69,6 @@ void mouse_DrawCircle(void)
 				break;
 			}
 
-
-
-
-
-			//if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
-			//{
-			//	if (g_nTotalShapes > 0)
-			//	{
-			//		if (!isInProgress)
-			//		{
-			//			g_nTotalShapes--;
-			//		}
-			//	}
-			//	// refresh the windows with menu contents
-			//	cleardevice();
-			//	InitUI(0);
-			//	DrawMenuOutline(1, TOTAL_LN, 1);
-			//	setcolor(0x000000);
-			//	PrintMouseDrawingInsideMenu(0);
-			//	setcolor(0x50AA50);
-			//	xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
-			//	DrawAllPrevShapes(true);
-			//	break;
-			//}
-
-			/*if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
-			{
-				return;
-			}*/
-
 			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
 			if (!isInProgress)
 			{
@@ -133,21 +95,15 @@ void mouse_DrawCircle(void)
 				circleOuterX = msg.x;
 				circleOuterY = msg.y;
 
-
-
 				printf("	您已选中圆上一点 (%d, %d)\n", circleOuterX, circleOuterY);
-
-
-
-				
-
-				
+			
 				g_nTotalShapes++;
 				shapeData[g_nTotalShapes - 1].shapeType = shape_circle;
 				shapeData[g_nTotalShapes - 1].coords[0].x = circleCenterX;
 				shapeData[g_nTotalShapes - 1].coords[0].y = circleCenterY;
 				shapeData[g_nTotalShapes - 1].coords[1].x = circleOuterX;
 				shapeData[g_nTotalShapes - 1].coords[1].y = circleOuterY;
+
 				if (!g_isUserSetColor)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = RandColor();
@@ -172,9 +128,9 @@ void mouse_DrawCircle(void)
 						shapeData[g_nTotalShapes - 1].fillColor = g_customFillColor;
 					}				
 				}
+
 				DrawAllPrevShapes(true);
 			
-
 				printf("	已画出以 (%d, %d) 为圆心，(%d, %d) 为圆上一点，半径为 %d 的一个圆\n", 
 					circleCenterX, 
 					circleCenterY, 
@@ -182,6 +138,7 @@ void mouse_DrawCircle(void)
 					circleOuterY, 
 					(int)sqrt(pow(shapeData[g_nTotalShapes - 1].coords[0].x - shapeData[g_nTotalShapes - 1].coords[1].x, 2) +
 							  pow(shapeData[g_nTotalShapes - 1].coords[0].y - shapeData[g_nTotalShapes - 1].coords[1].y, 2)));
+
 				isInProgress = false;
 				goto move;
 				break;
@@ -241,7 +198,6 @@ void mouse_DrawCircle(void)
 				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 
-
 				putpixel(circleCenterX, circleCenterY, 0x707000);
 				putpixel(circleCenterX + 1, circleCenterY, 0x707000);
 				putpixel(circleCenterX - 1, circleCenterY, 0x707000);
@@ -269,13 +225,12 @@ void mouse_DrawCircle(void)
 void mouse_DrawLine(void)
 {
 	const short int TOTAL_LN = 4;
-	bool isInProgress = false;; // To determine whether the mouse click is the first step or the second step
-	int lineStartPositionX;
-	int lineStartPositionY;
-	int	lineEndPositionX;
-	int lineEndPositionY;
+	bool			isInProgress = false;; // To determine whether the mouse click is the first step or the second step
+	int				lineStartPositionX;
+	int				lineStartPositionY;
+	int				lineEndPositionX;
+	int				lineEndPositionY;
 	
-
 	printf("已进入鼠标画线模式\n");
 	printf("操作指南：\n");
 	printf("用鼠标先点选起点再点选终点即可连续画线\n");
@@ -284,10 +239,8 @@ void mouse_DrawLine(void)
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0x000000);
 	PrintMouseDrawingInsideMenu(0);
-
 	mouse_msg msg;
 	
-
 	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
 		msg = getmouse(); // Get mouse clicks and position
@@ -295,7 +248,6 @@ void mouse_DrawLine(void)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1:
@@ -338,9 +290,6 @@ void mouse_DrawLine(void)
 				break;
 			}
 
-
-
-
 			/* if the mouse click indicates the first dot, store the position data of the starting point */
 			if (!isInProgress)
 			{
@@ -382,17 +331,14 @@ void mouse_DrawLine(void)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = g_customColor;
 				}
+
 				DrawAllPrevShapes(true);
-
-
 				
 				printf("	已画出从 (%d, %d) 到 (%d, %d) 的一条直线\n", 
 					lineStartPositionX, 
 					lineStartPositionY, 
 					lineEndPositionX, 
 					lineEndPositionY);
-
-
 
 				isInProgress = false; // reset the drawing process
 				goto move;
@@ -463,12 +409,12 @@ void mouse_DrawLine(void)
 				putpixel(msg.x - 1, msg.y, 0x707000);
 				putpixel(msg.x, msg.y + 1, 0x707000);
 				putpixel(msg.x, msg.y - 1, 0x707000);
+
 				DrawAllPrevShapes(true);
 				setcolor(0x909090);
 
 				line(lineStartPositionX, lineStartPositionY, msg.x, msg.y);
 			}
-
 			break;
 		default:
 			break;
@@ -479,11 +425,11 @@ void mouse_DrawLine(void)
 void mouse_DrawRectangle(void)
 {
 	const short int TOTAL_LN = 4; // total items in the menu bar
-	bool isInProgress = false; // To determine whether the mouse click is the first step or the second step
-	int rectUpLCornerX;
-	int rectUpLCornerY;
-	int	rectLowRCornerX;
-	int rectLowRCornerY;
+	bool			isInProgress = false; // To determine whether the mouse click is the first step or the second step
+	int				rectUpLCornerX;
+	int				rectUpLCornerY;
+	int				rectLowRCornerX;
+	int				rectLowRCornerY;
 
 	printf("已进入鼠标画矩形模式\n");
 	printf("操作指南：\n");
@@ -497,7 +443,6 @@ void mouse_DrawRectangle(void)
 
 	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
 	{
-
 		msg = getmouse();
 
 		switch (msg.msg)
@@ -571,14 +516,7 @@ void mouse_DrawRectangle(void)
 				rectLowRCornerX = msg.x;
 				rectLowRCornerY = msg.y;
 
-
-
 				printf("	您已选中点 (%d, %d)\n", rectLowRCornerX, rectLowRCornerY);
-
-
-
-
-
 
 				g_nTotalShapes++;
 				shapeData[g_nTotalShapes - 1].shapeType = shape_rectangle;
@@ -586,6 +524,7 @@ void mouse_DrawRectangle(void)
 				shapeData[g_nTotalShapes - 1].coords[0].y = rectUpLCornerY;
 				shapeData[g_nTotalShapes - 1].coords[1].x = rectLowRCornerX;
 				shapeData[g_nTotalShapes - 1].coords[1].y = rectLowRCornerY;
+
 				if (!g_isUserSetColor)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = RandColor();
@@ -613,12 +552,12 @@ void mouse_DrawRectangle(void)
 
 				DrawAllPrevShapes(true);
 
-
 				printf("	已画出以 (%d, %d) 和 (%d, %d) 为对角点的一个矩形\n",
 					rectUpLCornerX,
 					rectUpLCornerY,
 					rectLowRCornerX,
 					rectLowRCornerY);
+
 				isInProgress = false;
 				goto move;
 				break;
@@ -693,8 +632,6 @@ void mouse_DrawRectangle(void)
 
 				rectangle(rectUpLCornerX, rectUpLCornerY, msg.x, msg.y);
 			}
-
-
 			break;
 		default:
 			break;

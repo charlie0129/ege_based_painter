@@ -2,9 +2,9 @@
 #include "global.h"
 #include "graphics.h"
 
-extern WORD g_nTotalShapes;
+extern WORD   g_nTotalShapes;
 extern struct ShapeData shapeData[512];
-extern bool fileEdited;
+extern bool   fileEdited;
 extern bool   g_isUserSetColor; // global variable. used to determine whether the user has set a custom color
 extern bool   g_isUserSetFillColor;
 extern bool   g_isFillColorRandom;

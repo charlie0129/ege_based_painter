@@ -42,6 +42,7 @@ void InitUI(short int errCode)
 		
 	tmp_totalShapes = g_nTotalShapes;
 
+	// draw basic lines
 	setcaption("CC 画板");
 	setcolor(0x909090);
 	line(0, 579, 800, 579);
@@ -74,15 +75,16 @@ void InitUI(short int errCode)
 		xyprintf(67, 582, "更改已保存");
 	}
 
-
 	setcolor(0x000000);
 	xyprintf(133 + 16, 582, "提示信息请看控制台");
 
+	// display the number of each shape
 	xyprintf(203 + 81, 582, "线: %d", nLines);
 	xyprintf(245 + 81, 582, "圆: %d", nCircles);
 	xyprintf(287 + 81, 582, "矩形: %d", nRectangles);
 	xyprintf(343 + 81, 582, "多边形: %d", nPolygons);
 
+	// shhow the current color settings
 	xyprintf(505, 582, "前景:");
 	if (g_isUserSetColor)
 	{
@@ -117,14 +119,13 @@ void InitUI(short int errCode)
 
 void ClearData(void)
 {
-
 	memset(shapeData, '\0', sizeof(shapeData));
 	g_nTotalShapes = 0;
 }
 
 void DrawMenuOutline(WORD lnStart,
-	WORD lnEnd,
-	WORD col)
+	                 WORD lnEnd,
+	                 WORD col)
 {
 	setcolor(0x909090);
 	// vertical lines
@@ -178,25 +179,5 @@ struct MenuLnAndCol GetMouseCurrentLnAndCol(
 		coord.col = (x - 5) / (MENU_LENGTH / colTotal) + 1;
 	}
 	
-	/*for (short int i = 0; i < lnTotal; i++)
-	{
-		if ((x >= 5) && 
-			(y >= 5 + i * MENU_HIGHT) && 
-			(x <= 5 + MENU_LENGTH) && 
-			(y <= 5 + (i + 1) * MENU_HIGHT))
-		{
-			coord.ln = i + 1;
-		}
-		for (short int j = 0; j < colTotal; j++)
-		{
-			if ((x >= 5) &&
-				(y >= 5 + i * MENU_HIGHT) &&
-				(x <= 5 + MENU_LENGTH) &&
-				(y <= 5 + (i + 1) * MENU_HIGHT))
-			{
-				coord.ln = i + 1;
-			}
-		}
-	}*/
 	return coord;
 }

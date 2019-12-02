@@ -1,26 +1,19 @@
 #include "menu.h"
 
-
 void Menu(bool readResult)
 {
-	WORD tmpNOfShapes = g_nTotalShapes;
+	const short int TOTAL_LN = 7;
 
 	cleardevice();
 	InitUI(0);
 	printf("请在菜单界面用鼠标点击操作\n");
-
-	mouse_msg msg;
-
-
-
-	const short int TOTAL_LN = 7;
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0x000000);
 	PrintMenu(0);
+	mouse_msg msg;
 
 	for (; ; delay_fps(REFRESH_RATE))
 	{
-
 		msg = getmouse();
 
 		switch (msg.msg)
@@ -28,14 +21,14 @@ void Menu(bool readResult)
 		case mouse_msg_down:
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
-			case 1:
+			case 1: // 退出
 				return;
 				break;
-			case 2:
+			case 2: // 另存为
 				SaveFile();
 				goto move;
 				break;
-			case 3:
+			case 3: // 清除所有图形
 				
 				cleardevice();
 				MessageBox(NULL,
@@ -46,7 +39,7 @@ void Menu(bool readResult)
 				ClearData();
 				goto move;
 				break;
-			case 4:
+			case 4: // 画线
 				cleardevice();
 				InitUI(0);
 				mouse_DrawLine();
@@ -54,7 +47,7 @@ void Menu(bool readResult)
 				InitUI(0);
 				goto move;
 				break;
-			case 5:
+			case 5: // 画圆
 				cleardevice();
 				InitUI(0);
 				mouse_DrawCircle();
@@ -62,7 +55,7 @@ void Menu(bool readResult)
 				InitUI(0);
 				goto move;
 				break;
-			case 6:
+			case 6: // 画矩形
 				cleardevice();
 				InitUI(0);
 				mouse_DrawRectangle();
@@ -70,7 +63,7 @@ void Menu(bool readResult)
 				InitUI(0);
 				goto move;
 				break;
-			case 7:
+			case 7: // 画多边形
 				cleardevice();
 				InitUI(0);
 				coord_DrawPoly();
@@ -144,12 +137,8 @@ void Menu(bool readResult)
 		default:
 			break;
 		}
-	}
-
-		
-	
+	}	
 }
-
 
 
 void PrintMenu(short int lnToPrint)

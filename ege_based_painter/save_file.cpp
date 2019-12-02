@@ -74,6 +74,7 @@ void SaveFile(void)
 			goto reread;
 		}
 	}
+
 	fileEdited = false;
 	InitUI(0);
 	return;

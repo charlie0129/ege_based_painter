@@ -48,8 +48,7 @@ bool ReadFile(void)
 				ofn.lpstrTitle = TEXT("请选择一个文件");
 				ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
 				if (!(GetOpenFileName(&ofn)))
-				{
-					
+				{				
 					goto begin;
 				}
 
@@ -117,12 +116,6 @@ bool ReadFile(void)
 				}
 				break;
 			case 2: // do not read file
-				/*cleardevice();
-				InitUI(0);
-				MessageBox(NULL,
-					TEXT("未读取"),
-					TEXT("提示"),
-					MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);*/
 				readResult = 0;
 				isReadyToExit = true;
 				break;

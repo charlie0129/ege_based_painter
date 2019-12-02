@@ -10,21 +10,21 @@ int colorInf[7] = { 0x0000AA,   //BLUE
 
 void ChooseColor_EGE(WORD mode)
 {
-	const int TOTAL_LN = 10 + mode;
-	bool hasSetColor = false;
+	const int       TOTAL_LN = 10 + mode;
+	bool            hasSetColor = false;
 
-	// used for color customization
+	// variables used for color customization
 	const short int N_OF_NUMS_TO_READ = 3;
-	const int LEN_OF_STR_TO_READ = 11;
-	const int INPUT_MIN = 0;
-	const int INPUT_MAX = 255;
+	const int       LEN_OF_STR_TO_READ = 11;
+	const int       INPUT_MIN = 0;
+	const int       INPUT_MAX = 255;
 
-	// initialization of varibles needed to read inputs
-	char str[LEN_OF_STR_TO_READ];
-	char* readTmp;
-	bool isInputValid = true;
-	int numRead[N_OF_NUMS_TO_READ];
-	int i; // loop controller. I didn't use "for" loop because in this situation it's not a good idea.
+	// initialization of variables needed to read inputs
+	char            str[LEN_OF_STR_TO_READ];
+	char*           readTmp;
+	bool            isInputValid = true;
+	int             numRead[N_OF_NUMS_TO_READ];
+	int             i; // loop controller. I didn't use "for" loop because in this situation it's not a good idea.
 
 
 	printf("已进入颜色选择模式\n");
@@ -34,18 +34,13 @@ void ChooseColor_EGE(WORD mode)
 	InitUI(1);
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	DrawAllPrevShapes(true);
-
 	PrintColorChoosingInsideMenu(0, true, mode);
-
-
 	mouse_msg msg;
-
-	msg = getmouse();
 
 	for (; !hasSetColor; delay_fps(800))
 	{
-
 		msg = getmouse();
+
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
@@ -53,7 +48,6 @@ void ChooseColor_EGE(WORD mode)
 			{
 			case 1:
 				return;
-
 			case 2:
 				hasSetColor = true;
 				if (mode == 0)
@@ -83,7 +77,6 @@ void ChooseColor_EGE(WORD mode)
 					g_customFillColor = colorInf[1];
 				}
 				printf("		已设置为绿色\n");
-
 				break;
 			case 4:
 				hasSetColor = true;
@@ -324,7 +317,6 @@ void ChooseColor_EGE(WORD mode)
 			break;
 		}
 	}
-
 }
 
 
@@ -357,8 +349,7 @@ void PrintColorChoosingInsideMenu(WORD lnToPrint, bool withColor, WORD mode)
 		{
 			if (withColor) setcolor(0x000000);
 			xyprintf(8, 8 + 10 * MENU_HIGHT, "无");
-		}
-		
+		}	
 		break;
 	case 1:
 		if (withColor) setcolor(0x000000);
