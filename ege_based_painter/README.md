@@ -20,8 +20,8 @@
         * 检查输入的坐标范围是否正确
         * 检查输入的边数是否符合几何规律
     * 注
-        * 实现让用户输入并对字符串检查的函数是 coord_draw.cpp 内的 coord_DrawPolyPrompt()
-		* 实现画多边形的函数是 coord_draw.cpp 内的 coord_DrawPoly()
+        * 实现让用户输入并对字符串检查的函数是 coord_draw.cpp 内的 `coord_DrawPolyPrompt()`
+		* 实现画多边形的函数是 coord_draw.cpp 内的 `coord_DrawPoly()`
 * Lab08
     * 作业完成说明
         * 主要按照 Lab08 演示文稿上的思路2编写
