@@ -152,11 +152,27 @@ void coord_DrawPolyPrompt(void)
 	{
 		shapeData[g_nTotalShapes - 1].foregroundColor = g_customColor;
 	}
+	if (!g_isUserSetFillColor)
+	{
+		shapeData[g_nTotalShapes - 1].isFill = false;
+	}
+	else
+	{
+		shapeData[g_nTotalShapes - 1].isFill = true;
+		if (g_isFillColorRandom)
+		{
+			shapeData[g_nTotalShapes - 1].fillColor = RandColor();
+		}
+		else
+		{
+			shapeData[g_nTotalShapes - 1].fillColor = g_customFillColor;
+		}
+	}
 }
 
 void coord_DrawPoly(void)
 {
-	const short int TOTAL_LN = 3; // total items in the menu bar
+	const short int TOTAL_LN = 5; // total items in the menu bar
 
 	bool isInProgress = false;
 
@@ -164,7 +180,6 @@ void coord_DrawPoly(void)
 	printf("已进入坐标画多边形模式\n");
 
 	//setcolor(0x909090);
-	coord_DrawPolyPrompt();
 	DrawAllPrevShapes(true);
 	DrawMenuOutline(1, TOTAL_LN, 1);
 	setcolor(0x000000);
@@ -182,48 +197,65 @@ void coord_DrawPoly(void)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 3)
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
-				coord_DrawPolyPrompt();
-				DrawAllPrevShapes(true);
-			}
-
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 2) // undo
-			{
+			case 1:
+				return;
+				break;
+			case 2:
 				if (g_nTotalShapes > 0)
 				{
-
 					if (!isInProgress)
 					{
 						g_nTotalShapes--;
 					}
-
 				}
 				// refresh the windows with menu contents
 				cleardevice();
 				InitUI(0);
 				DrawMenuOutline(1, TOTAL_LN, 1);
 				setcolor(0x000000);
-				PrintCoordDrawingInsideMenu(0);
+				PrintMouseDrawingInsideMenu(0);
 				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 3:
+				coord_DrawPolyPrompt();
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				break;
+			case 4:
+				ChooseColor_EGE(0);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 5:
+				ChooseColor_EGE(1);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			default:
 				break;
 			}
-			
-			if (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln == 1)
-			{
-				return;
-			}
 
+			
+		
 
 
 
 			break; // not needed
 		case mouse_msg_move:
-
+			move:
 			
 			InitUI(0);
+			DrawAllPrevShapes(true);
 			//DrawMenuOutline(1, TOTAL_LN, 1);
 			//setcolor(0x000000);
 			//PrintCoordDrawingInsideMenu(0);
@@ -253,6 +285,18 @@ void coord_DrawPoly(void)
 				PrintCoordDrawingInsideMenu(0);
 				setcolor(0x5050AA);
 				PrintCoordDrawingInsideMenu(3);
+				break;
+			case 4:
+				setcolor(0x000000);
+				PrintCoordDrawingInsideMenu(0);
+				setcolor(0x5050AA);
+				PrintCoordDrawingInsideMenu(4);
+				break;
+			case 5:
+				setcolor(0x000000);
+				PrintCoordDrawingInsideMenu(0);
+				setcolor(0x5050AA);
+				PrintCoordDrawingInsideMenu(5);
 				break;
 			default:
 				break;

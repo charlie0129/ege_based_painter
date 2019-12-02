@@ -18,7 +18,7 @@ void DrawAllPrevShapes(bool withColor)
 				}
 				else
 				{
-					setfillcolor(WHITE);
+					setfillcolor(0xFFFFFF);
 				}
 			}
 			else
@@ -97,10 +97,20 @@ void DrawAllPrevShapes(bool withColor)
 					*(coordData + 2 * j) = ((shapeData + i)->coords + j)->x;
 					*(coordData + 2 * j + 1) = ((shapeData + i)->coords + j)->y;
 				}
+				*(coordData + 2 * (*((shapeData + i)->extraData))) = ((shapeData + i)->coords)->x;
+				*(coordData + 2 * (*((shapeData + i)->extraData)) + 1) = ((shapeData + i)->coords)->y;
 				//coordData[shapeData[i].extraData[0] * 2] = shapeData[i].coords[0].x;
 				//coordData[shapeData[i].extraData[0] * 2 + 1] = shapeData[i].coords[0].y;
 				//setfillcolor(0xAAAAAA);
-				drawpoly(*((shapeData + i)->extraData), coordData);
+				if (shapeData[i].isFill)
+				{
+					fillpoly(*((shapeData + i)->extraData), coordData);
+				}
+				else
+				{
+					drawpoly(*((shapeData + i)->extraData) + 1, coordData);
+				}
+				
 				break;
 			default:
 				break;
@@ -167,8 +177,9 @@ void PrintCoordDrawingInsideMenu(WORD lnToPrint)
 	case 0:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "撤销");
-		xyprintf(8, 8 + 2 * MENU_HIGHT, "再画一个");
+		xyprintf(8, 8 + 2 * MENU_HIGHT, "画一个多边形");
 		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前前景色");
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "设置填充并选择填充色");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "返回");
@@ -177,10 +188,13 @@ void PrintCoordDrawingInsideMenu(WORD lnToPrint)
 		xyprintf(8, 8 + 1 * MENU_HIGHT, "撤销");
 		break;
 	case 3:
-		xyprintf(8, 8 + 2 * MENU_HIGHT, "再画一个");
+		xyprintf(8, 8 + 2 * MENU_HIGHT, "画一个多边形");
 		break;
 	case 4:
 		xyprintf(8, 8 + 3 * MENU_HIGHT, "选择当前前景色");
+		break;
+	case 5:
+		xyprintf(8, 8 + 4 * MENU_HIGHT, "设置填充并选择填充色");
 		break;
 	default:
 		break;

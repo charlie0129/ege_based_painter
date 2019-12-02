@@ -114,11 +114,11 @@ void mouse_DrawCircle(void)
 				circleCenterY = msg.y;
 
 				// print a big dot
-				putpixel(circleCenterX, circleCenterY, 0xFCFC54);
-				putpixel(circleCenterX + 1, circleCenterY, 0xFCFC54);
-				putpixel(circleCenterX - 1, circleCenterY, 0xFCFC54);
-				putpixel(circleCenterX, circleCenterY + 1, 0xFCFC54);
-				putpixel(circleCenterX, circleCenterY - 1, 0xFCFC54);
+				putpixel(circleCenterX, circleCenterY, 0x707000);
+				putpixel(circleCenterX + 1, circleCenterY, 0x707000);
+				putpixel(circleCenterX - 1, circleCenterY, 0x707000);
+				putpixel(circleCenterX, circleCenterY + 1, 0x707000);
+				putpixel(circleCenterX, circleCenterY - 1, 0x707000);
 
 				printf("	您已选中圆心 (%d, %d)\n", circleCenterX, circleCenterY);
 
@@ -242,16 +242,16 @@ void mouse_DrawCircle(void)
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 
 
-				putpixel(circleCenterX, circleCenterY, 0xFCFC54);
-				putpixel(circleCenterX + 1, circleCenterY, 0xFCFC54);
-				putpixel(circleCenterX - 1, circleCenterY, 0xFCFC54);
-				putpixel(circleCenterX, circleCenterY + 1, 0xFCFC54);
-				putpixel(circleCenterX, circleCenterY - 1, 0xFCFC54);
-				putpixel(msg.x, msg.y, 0xFCFC54);
-				putpixel(msg.x + 1, msg.y, 0xFCFC54);
-				putpixel(msg.x - 1, msg.y, 0xFCFC54);
-				putpixel(msg.x, msg.y + 1, 0xFCFC54);
-				putpixel(msg.x, msg.y - 1, 0xFCFC54);
+				putpixel(circleCenterX, circleCenterY, 0x707000);
+				putpixel(circleCenterX + 1, circleCenterY, 0x707000);
+				putpixel(circleCenterX - 1, circleCenterY, 0x707000);
+				putpixel(circleCenterX, circleCenterY + 1, 0x707000);
+				putpixel(circleCenterX, circleCenterY - 1, 0x707000);
+				putpixel(msg.x, msg.y, 0x707000);
+				putpixel(msg.x + 1, msg.y, 0x707000);
+				putpixel(msg.x - 1, msg.y, 0x707000);
+				putpixel(msg.x, msg.y + 1, 0x707000);
+				putpixel(msg.x, msg.y - 1, 0x707000);
 				DrawAllPrevShapes(true);
 				setcolor(0x909090);
 				
@@ -347,11 +347,11 @@ void mouse_DrawLine(void)
 				lineStartPositionX = msg.x;
 				lineStartPositionY = msg.y;
 
-				putpixel(lineStartPositionX, lineStartPositionY, 0xFCFC54);
-				putpixel(lineStartPositionX + 1, lineStartPositionY, 0xFCFC54);
-				putpixel(lineStartPositionX - 1, lineStartPositionY, 0xFCFC54);
-				putpixel(lineStartPositionX, lineStartPositionY + 1, 0xFCFC54);
-				putpixel(lineStartPositionX, lineStartPositionY - 1, 0xFCFC54);
+				putpixel(lineStartPositionX, lineStartPositionY, 0x707000);
+				putpixel(lineStartPositionX + 1, lineStartPositionY, 0x707000);
+				putpixel(lineStartPositionX - 1, lineStartPositionY, 0x707000);
+				putpixel(lineStartPositionX, lineStartPositionY + 1, 0x707000);
+				putpixel(lineStartPositionX, lineStartPositionY - 1, 0x707000);
 
 				printf("	您已选中起点 (%d, %d)\n", lineStartPositionX, lineStartPositionY);
 
@@ -453,16 +453,16 @@ void mouse_DrawLine(void)
 				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 
-				putpixel(lineStartPositionX, lineStartPositionY, 0xFCFC54);
-				putpixel(lineStartPositionX + 1, lineStartPositionY, 0xFCFC54);
-				putpixel(lineStartPositionX - 1, lineStartPositionY, 0xFCFC54);
-				putpixel(lineStartPositionX, lineStartPositionY + 1, 0xFCFC54);
-				putpixel(lineStartPositionX, lineStartPositionY - 1, 0xFCFC54);
-				putpixel(msg.x, msg.y, 0xFCFC54);
-				putpixel(msg.x + 1, msg.y, 0xFCFC54);
-				putpixel(msg.x - 1, msg.y, 0xFCFC54);
-				putpixel(msg.x, msg.y + 1, 0xFCFC54);
-				putpixel(msg.x, msg.y - 1, 0xFCFC54);
+				putpixel(lineStartPositionX, lineStartPositionY, 0x707000);
+				putpixel(lineStartPositionX + 1, lineStartPositionY, 0x707000);
+				putpixel(lineStartPositionX - 1, lineStartPositionY, 0x707000);
+				putpixel(lineStartPositionX, lineStartPositionY + 1, 0x707000);
+				putpixel(lineStartPositionX, lineStartPositionY - 1, 0x707000);
+				putpixel(msg.x, msg.y, 0x707000);
+				putpixel(msg.x + 1, msg.y, 0x707000);
+				putpixel(msg.x - 1, msg.y, 0x707000);
+				putpixel(msg.x, msg.y + 1, 0x707000);
+				putpixel(msg.x, msg.y - 1, 0x707000);
 				DrawAllPrevShapes(true);
 				setcolor(0x909090);
 
@@ -552,11 +552,11 @@ void mouse_DrawRectangle(void)
 				rectUpLCornerY = msg.y;
 
 				// print a big dot
-				putpixel(rectUpLCornerX, rectUpLCornerY, 0xFCFC54);
-				putpixel(rectUpLCornerX + 1, rectUpLCornerY, 0xFCFC54);
-				putpixel(rectUpLCornerX - 1, rectUpLCornerY, 0xFCFC54);
-				putpixel(rectUpLCornerX, rectUpLCornerY + 1, 0xFCFC54);
-				putpixel(rectUpLCornerX, rectUpLCornerY - 1, 0xFCFC54);
+				putpixel(rectUpLCornerX, rectUpLCornerY, 0x707000);
+				putpixel(rectUpLCornerX + 1, rectUpLCornerY, 0x707000);
+				putpixel(rectUpLCornerX - 1, rectUpLCornerY, 0x707000);
+				putpixel(rectUpLCornerX, rectUpLCornerY + 1, 0x707000);
+				putpixel(rectUpLCornerX, rectUpLCornerY - 1, 0x707000);
 
 				printf("	您已选中点 (%d, %d)\n", rectUpLCornerX, rectUpLCornerY);
 
@@ -678,16 +678,16 @@ void mouse_DrawRectangle(void)
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 
 
-				putpixel(rectUpLCornerX, rectUpLCornerY, 0xFCFC54);
-				putpixel(rectUpLCornerX + 1, rectUpLCornerY, 0xFCFC54);
-				putpixel(rectUpLCornerX - 1, rectUpLCornerY, 0xFCFC54);
-				putpixel(rectUpLCornerX, rectUpLCornerY + 1, 0xFCFC54);
-				putpixel(rectUpLCornerX, rectUpLCornerY - 1, 0xFCFC54);
-				putpixel(msg.x, msg.y, 0xFCFC54);
-				putpixel(msg.x + 1, msg.y, 0xFCFC54);
-				putpixel(msg.x - 1, msg.y, 0xFCFC54);
-				putpixel(msg.x, msg.y + 1, 0xFCFC54);
-				putpixel(msg.x, msg.y - 1, 0xFCFC54);
+				putpixel(rectUpLCornerX, rectUpLCornerY, 0x707000);
+				putpixel(rectUpLCornerX + 1, rectUpLCornerY, 0x707000);
+				putpixel(rectUpLCornerX - 1, rectUpLCornerY, 0x707000);
+				putpixel(rectUpLCornerX, rectUpLCornerY + 1, 0x707000);
+				putpixel(rectUpLCornerX, rectUpLCornerY - 1, 0x707000);
+				putpixel(msg.x, msg.y, 0x707000);
+				putpixel(msg.x + 1, msg.y, 0x707000);
+				putpixel(msg.x - 1, msg.y, 0x707000);
+				putpixel(msg.x, msg.y + 1, 0x707000);
+				putpixel(msg.x, msg.y - 1, 0x707000);
 				DrawAllPrevShapes(true);
 				setcolor(0x909090);
 
