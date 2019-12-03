@@ -8,15 +8,15 @@
 #include "menu.h"
 #include "read_file.h"
 
-bool		g_isUserSetColor = false; // global variable. used to determine whether the user has set a custom color
-bool		g_isUserSetFillColor = false;
-bool		g_isFillColorRandom = false;
-int			g_customColor = 0x0;
-int			g_customFillColor = 0x0;
-struct		ShapeData shapeData[512];
-WORD		g_nTotalShapes = 0;
-char		fileValidityCheckSuffix = 'C';
-bool	    fileEdited = false;
+bool		     g_isUserSetColor = false; // global variable. used to determine whether the user has set a custom color
+bool		     g_isUserSetFillColor = false;
+bool		     g_isFillColorRandom = false;
+int			     g_customColor = 0x0;
+int			     g_customFillColor = 0x0;
+struct ShapeData shapeData[512];
+WORD		     g_nTotalShapes = 0;
+char		     fileValidityCheckSuffix = '\0';
+bool	         fileEdited = false;
 
 int main(void)
 {
@@ -24,6 +24,6 @@ int main(void)
 	//setrendermode(RENDER_AUTO);
 	setbkcolor(WHITE);
 	setfont(EGE_FONT_SIZE, 0, EGE_FONT);
-	Menu(ReadFile());
+	Menu(ReadFromFile());
 	return 0;
 }

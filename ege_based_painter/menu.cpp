@@ -25,7 +25,7 @@ void Menu(bool readResult)
 				return;
 				break;
 			case 2: // 另存为
-				SaveFile();
+				WriteToFile();
 				goto move;
 				break;
 			case 3: // 清除所有图形

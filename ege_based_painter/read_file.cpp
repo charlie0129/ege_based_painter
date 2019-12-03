@@ -1,8 +1,7 @@
 #include "read_file.h"
 
-bool ReadFile(void)
-{
-	
+bool ReadFromFile(void)
+{	
 	FILE*           fp;
 	const short int TOTAL_LN = 2;
 	short int       readResult; // indicates whether the reading action is successful
@@ -10,6 +9,7 @@ bool ReadFile(void)
 	OPENFILENAME    ofn = { 0 };
 	TCHAR           strFilename[MAX_PATH] = { 0 };
 	char            c_strFilename[MAX_PATH] = { 0 };
+	char            readFileValidityCheckSuffix;
 	begin:
 	cleardevice();
 	InitUI(0);
@@ -40,7 +40,7 @@ bool ReadFile(void)
 			case1:				
 				ofn.lStructSize = sizeof(OPENFILENAME);
 				ofn.hwndOwner = NULL;
-				ofn.lpstrFilter = TEXT("Shape Data (*.draw)\0*.draw\0All (*.*)\0*.*\0\0");
+				ofn.lpstrFilter = TEXT("Shape Data (*.draw)\0*.draw\0\0");
 				ofn.nFilterIndex = 1;
 				ofn.lpstrFile = strFilename;
 				ofn.nMaxFile = sizeof(strFilename);
@@ -63,7 +63,7 @@ bool ReadFile(void)
 					cleardevice();
 					InitUI(0);
 					int selection = MessageBox(NULL, 
-						TEXT("请检查文件是否存在或正确\n确保路径没有中文"), 
+						TEXT("请检查文件是否正确并确保路径没有中文"), 
 						TEXT("读取错误！"), 
 						MB_ABORTRETRYIGNORE | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 					switch (selection)
@@ -95,19 +95,26 @@ bool ReadFile(void)
 							sizeof(WORD), 
 							1, 
 							fp) == 1) 
-						&& (fread(&fileValidityCheckSuffix, 
-							sizeof(fileValidityCheckSuffix), 
+						&& (fread(&readFileValidityCheckSuffix,
+							sizeof(readFileValidityCheckSuffix),
 							1, 
-							fp) == 1) 
-						&& (fileValidityCheckSuffix == 'C'))
+							fp) == 1))
 					{
-						MessageBox(NULL,
-							TEXT("读取成功"),
-							TEXT("提示"),
-							MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
-						fclose(fp);
-						readResult = 1;
-						isReadyToExit = true;
+						if (readFileValidityCheckSuffix 
+							== fileValidityCheckSuffix)
+						{
+							MessageBox(NULL,
+								TEXT("读取成功"),
+								TEXT("提示"),
+								MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
+							fclose(fp);
+							readResult = 1;
+							isReadyToExit = true;
+						}
+						else
+						{
+							goto READINGFAILED;
+						}
 					}
 					else
 					{

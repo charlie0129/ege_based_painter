@@ -1,6 +1,6 @@
 #include "save_file.h"
 
-void SaveFile(void)
+void WriteToFile(void)
 {
 	FILE* fp;
 	reopen:
@@ -9,7 +9,7 @@ void SaveFile(void)
 	char c_strFilename[MAX_PATH] = { 0 };
 	ofn.lStructSize = sizeof(OPENFILENAME);
 	ofn.hwndOwner = NULL;
-	ofn.lpstrFilter = TEXT("Shape Data (*.draw)\0*.draw\0All (*.*)\0*.*\0\0");
+	ofn.lpstrFilter = TEXT("Shape Data (*.draw)\0*.draw\0\0");
 	ofn.nFilterIndex = 1;//过滤器索引
 	ofn.lpstrFile = strFilename;
 	ofn.nMaxFile = sizeof(strFilename);
@@ -17,6 +17,7 @@ void SaveFile(void)
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
 	ofn.lpstrTitle = TEXT("画图文件另存为");
 	ofn.lpstrDefExt = TEXT("draw");
+
 	if (!(GetSaveFileName(&ofn)))
 	{
 		return;

@@ -5,5 +5,5 @@
 extern struct ShapeData shapeData[512];
 extern char fileValidityCheckSuffix;
 
-bool ReadFile(void);
+bool ReadFromFile(void);
 void TCHARToChar(const TCHAR* tchar, char* _char);
