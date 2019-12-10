@@ -638,3 +638,221 @@ void mouse_DrawRectangle(void)
 		}
 	}
 }
+
+void mouse_DrawPoly(void)
+{
+	const short int TOTAL_LN = 4; // total items in the menu bar
+	bool			isInProgress = false; // To determine whether the mouse click is the first step or the second step
+	WORD            polyCoords[50];
+	WORD            sides = 0;
+	printf("已进入鼠标画多边形模式\n");
+	printf("操作指南：\n");
+	printf("用鼠标点选顶点，最后一个点靠近起始点来结束\n");
+	DrawAllPrevShapes(true);
+	DrawMenuOutline(1, TOTAL_LN, 1);
+	setcolor(0x000000);
+	PrintMouseDrawingInsideMenu(0);
+	mouse_msg msg;
+
+	for (; is_run(); delay_fps(REFRESH_RATE)) // Using "for" statement to draw multiple circles at a time and refresh the screen
+	{
+		msg = getmouse();
+
+		switch (msg.msg)
+		{
+		case mouse_msg_down:
+			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
+			{
+			case 1:
+				return;
+				break;
+			case 2:
+				if (g_nTotalShapes > 0)
+				{
+					if (!isInProgress)
+					{
+						g_nTotalShapes--;
+					}
+				}
+				// refresh the windows with menu contents
+				cleardevice();
+				InitUI(0);
+				DrawMenuOutline(1, TOTAL_LN, 1);
+				setcolor(0x000000);
+				PrintMouseDrawingInsideMenu(0);
+				setcolor(0x50AA50);
+				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 3:
+				ChooseColor_EGE(0);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			case 4:
+				ChooseColor_EGE(1);
+				cleardevice();
+				InitUI(0);
+				DrawAllPrevShapes(true);
+				goto move;
+				break;
+			default:
+				break;
+			}
+
+			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
+			if (!isInProgress)
+			{
+				polyCoords[0] = msg.x;
+				polyCoords[1] = msg.y;
+				sides = 0;
+				printf("	您已选中点 (%d, %d)\n", polyCoords[0], polyCoords[1]);
+
+				isInProgress = true;
+				break;
+			}
+
+			/* if the mouse click indicates the first dot, store the position data of other dots on the circle */
+			if (isInProgress)
+			{
+				sides++;
+				polyCoords[2 * sides] = msg.x;
+				polyCoords[2 * sides + 1] = msg.y;
+
+				printf("	您已选中点 (%d, %d)\n", polyCoords[2 * sides], polyCoords[2 * sides + 1]);
+
+				if (sqrt(pow(polyCoords[0] - polyCoords[2 * sides], 2) +
+					pow(polyCoords[1] - polyCoords[2 * sides + 1], 2)) <= 4
+					&& sides >= 3)
+				{
+					polyCoords[2 * sides] = polyCoords[0];
+					polyCoords[2 * sides + 1] = polyCoords[1];
+					g_nTotalShapes++;
+					shapeData[g_nTotalShapes - 1].shapeType = shape_polygon;
+					shapeData[g_nTotalShapes - 1].extraData[0] = sides; // record the sides
+
+					// prepare the coordinate data for storage
+					for (int j = 0; j < shapeData[g_nTotalShapes - 1].extraData[0]; j++)
+					{
+						shapeData[g_nTotalShapes - 1].coords[j].x = polyCoords[2 * j];
+						shapeData[g_nTotalShapes - 1].coords[j].y = polyCoords[2 * j + 1];
+					}
+
+					if (!g_isUserSetColor)
+					{
+						shapeData[g_nTotalShapes - 1].foregroundColor = RandColor();
+					}
+					else
+					{
+						shapeData[g_nTotalShapes - 1].foregroundColor = g_customColor;
+					}
+					if (!g_isUserSetFillColor)
+					{
+						shapeData[g_nTotalShapes - 1].isFill = false;
+					}
+					else
+					{
+						shapeData[g_nTotalShapes - 1].isFill = true;
+						if (g_isFillColorRandom)
+						{
+							shapeData[g_nTotalShapes - 1].fillColor = RandColor();
+						}
+						else
+						{
+							shapeData[g_nTotalShapes - 1].fillColor = g_customFillColor;
+						}
+					}
+					DrawAllPrevShapes(true);
+					isInProgress = false;
+					goto move;
+				}
+				
+
+				break;
+			}
+			break; // not needed
+		case mouse_msg_move:
+		move:
+			if (!isInProgress)
+			{
+				InitUI(0);
+				//DrawMenuOutline(1, TOTAL_LN, 1);
+				//setcolor(0x000000);
+				//PrintMouseDrawingInsideMenu(0);
+				setcolor(0x50AA50);
+				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
+				switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
+				{
+				case 0:
+					DrawMenuOutline(1, TOTAL_LN, 1);
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					break;
+				case 1:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(1);
+					break;
+				case 2:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(2);
+				case 3:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(3);
+					break;
+				case 4:
+					setcolor(0x000000);
+					PrintMouseDrawingInsideMenu(0);
+					setcolor(0x5050AA);
+					PrintMouseDrawingInsideMenu(4);
+					break;
+				default:
+					break;
+				}
+			}
+
+			if (isInProgress)
+			{
+				cleardevice();
+				delay_fps(10000);
+				InitUI(1);
+				setcolor(0x50AA50);
+				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
+
+
+				DrawAllPrevShapes(true);
+				setcolor(0x909090);
+				if (sides >= 1)
+				{
+					for (int i = 0; i < sides * 2; i += 2)
+					{
+						line(polyCoords[i], polyCoords[i + 1], polyCoords[i + 2], polyCoords[i + 3]);
+					}
+					
+				}
+				if (sqrt(pow(polyCoords[0] - msg.x, 2) +
+					pow(polyCoords[1] - msg.y, 2)) <= 4
+					&& sides >= 3)
+				{
+					line(polyCoords[sides * 2], polyCoords[sides * 2 + 1], polyCoords[0], polyCoords[1]);
+				}
+				else
+				{
+					line(polyCoords[sides * 2], polyCoords[sides * 2 + 1], msg.x, msg.y);
+				}
+				
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}

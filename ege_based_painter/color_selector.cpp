@@ -52,11 +52,12 @@ void ChooseColor_EGE(WORD mode)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
+			// choose color from the color panel
 			mousepos(&tmp_x, &tmp_y);
 			if (tmp_x > 0
 				&& tmp_x < 0.9 * 256
 				&& tmp_y > 8 + 11 * MENU_HIGHT
-				&& tmp_y < (double)8 + 11 * MENU_HIGHT + 360 * 0.9)
+				&& tmp_y < (double)8 + (double)11 * MENU_HIGHT + (double)360 * 0.9)
 			{
 				if (mode == 0)
 				{
@@ -72,6 +73,8 @@ void ChooseColor_EGE(WORD mode)
 				hasSetColor = true;
 				printf("		已设置为 #%X 色\n", getpixel(tmp_x, tmp_y));
 			}
+
+			// choose color from the menu
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1:
@@ -445,7 +448,6 @@ void PrintColorPanel(WORD x_offset, WORD y_offset)
 		for (color_x = 0; color_x < 256; ++color_x)
 		{
 			colorPanelValue = hsl2rgb((float)color_y, 1.0f, 0.5f);
-			//setcolor(alphacol(colorPanelValue, 0x000000, color_x));
 			putpixel((int)(0.9 * color_x + x_offset), (int)(0.9 * color_y + y_offset), alphacol(colorPanelValue, 0x000000, color_x));
 		}
 	}
@@ -456,7 +458,6 @@ color_t alphasingle(color_t a, color_t b, color_t alpha)
 	return (a * (0xFF - alpha) + b * alpha) >> 8;
 }
 
-// 颜色alpha混合计算函数
 color_t alphacol(color_t d, color_t s, color_t alpha)
 {
 	return (alphasingle(d & 0xFF00FF, s & 0xFF00FF, alpha) & 0xFF00FF)

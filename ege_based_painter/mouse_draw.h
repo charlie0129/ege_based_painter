@@ -10,3 +10,4 @@ extern WORD g_nTotalShapes;
 void mouse_DrawCircle(void);
 void mouse_DrawLine(void);
 void mouse_DrawRectangle(void);
+void mouse_DrawPoly(void);

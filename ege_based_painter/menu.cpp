@@ -2,7 +2,7 @@
 
 void Menu(bool readResult)
 {
-	const short int TOTAL_LN = 7;
+	const short int TOTAL_LN = 8;
 
 	cleardevice();
 	InitUI(0);
@@ -64,6 +64,14 @@ void Menu(bool readResult)
 				goto move;
 				break;
 			case 7: // 画多边形
+				cleardevice();
+				InitUI(0);
+				mouse_DrawPoly();
+				cleardevice();
+				InitUI(0);
+				goto move;
+				break;
+			case 8: // 画多边形
 				cleardevice();
 				InitUI(0);
 				coord_DrawPoly();
@@ -130,6 +138,12 @@ void Menu(bool readResult)
 				setcolor(0x5050AA);
 				PrintMenu(7);
 				break;
+			case 8:
+				setcolor(0x000000);
+				PrintMenu(0);
+				setcolor(0x5050AA);
+				PrintMenu(8);
+				break;
 			default:
 				break;
 			}
@@ -156,7 +170,8 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 3 * MENU_HIGHT, "用鼠标画线");
 		xyprintf(8, 8 + 4 * MENU_HIGHT, "用鼠标画圆");
 		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画矩形");
-		xyprintf(8, 8 + 6 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
+		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画多边形");
+		xyprintf(8, 8 + 7 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
 		break;
 	case 1:
 		xyprintf(8, 8 + 0 * MENU_HIGHT, "退出");
@@ -177,7 +192,10 @@ void PrintMenu(short int lnToPrint)
 		xyprintf(8, 8 + 5 * MENU_HIGHT, "用鼠标画矩形");
 		break;
 	case 7:
-		xyprintf(8, 8 + 6 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
+		xyprintf(8, 8 + 6 * MENU_HIGHT, "用鼠标画多边形");
+		break;
+	case 8:
+		xyprintf(8, 8 + 7 * MENU_HIGHT, "!!!（作业）坐标绘制多边形");
 		break;
 	default:
 		break;

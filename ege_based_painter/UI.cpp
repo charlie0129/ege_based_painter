@@ -89,7 +89,7 @@ void InitUI(short int errCode)
 	if (g_isUserSetColor)
 	{
 		setfillcolor(g_customColor);
-		bar(540, 585, 552, 597);
+		bar(540, 585, 565, 597);
 	}
 	else
 	{
@@ -107,7 +107,7 @@ void InitUI(short int errCode)
 		else
 		{
 			setfillcolor(g_customFillColor);
-			bar(620, 585, 632, 597);
+			bar(620, 585, 645, 597);
 		}
 	}
 	else
