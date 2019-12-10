@@ -12,6 +12,8 @@ void ChooseColor_EGE(WORD mode)
 {
 	const int       TOTAL_LN = 10 + mode;
 	bool            hasSetColor = false;
+	int             tmp_x, tmp_y;
+	PIMAGE          img = newimage();
 
 	// variables used for color customization
 	const short int N_OF_NUMS_TO_READ = 3;
@@ -26,15 +28,21 @@ void ChooseColor_EGE(WORD mode)
 	int             numRead[N_OF_NUMS_TO_READ];
 	int             i; // loop controller. I didn't use "for" loop because in this situation it's not a good idea.
 
-
 	printf("已进入颜色选择模式\n");
 	printf("操作指南：\n");
-	printf("用鼠标先点选颜色\n");
+	printf("用鼠标在菜单或调色盘上点选颜色\n");
 	cleardevice();
 	InitUI(1);
 	DrawMenuOutline(1, TOTAL_LN, 1);
-	DrawAllPrevShapes(true);
+	PrintColorPanel(0, 8 + 11 * MENU_HIGHT);
 	PrintColorChoosingInsideMenu(0, true, mode);
+	getimage(
+		img,
+		0,
+		8 + 11 * MENU_HIGHT,
+		255,
+		359
+	);
 	mouse_msg msg;
 
 	for (; !hasSetColor; delay_fps(800))
@@ -44,6 +52,26 @@ void ChooseColor_EGE(WORD mode)
 		switch (msg.msg)
 		{
 		case mouse_msg_down:
+			mousepos(&tmp_x, &tmp_y);
+			if (tmp_x > 0
+				&& tmp_x < 0.9 * 256
+				&& tmp_y > 8 + 11 * MENU_HIGHT
+				&& tmp_y < (double)8 + 11 * MENU_HIGHT + 360 * 0.9)
+			{
+				if (mode == 0)
+				{
+					g_isUserSetColor = true;
+					g_customColor = getpixel(tmp_x, tmp_y);
+				}
+				else
+				{
+					g_isFillColorRandom = false;
+					g_isUserSetFillColor = true;
+					g_customFillColor = getpixel(tmp_x, tmp_y);
+				}
+				hasSetColor = true;
+				printf("		已设置为 #%X 色\n", getpixel(tmp_x, tmp_y));
+			}
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1:
@@ -246,7 +274,15 @@ void ChooseColor_EGE(WORD mode)
 			setcolor(0x50AA50);
 			xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
 			setcolor(0x202030);
-			DrawAllPrevShapes(true);
+
+			// use this method to increase speed
+			putimage(
+				0,
+				8 + 11 * MENU_HIGHT, 
+				img,
+				SRCCOPY
+			);
+
 			DrawMenuOutline(1, TOTAL_LN, 1);
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
@@ -398,4 +434,31 @@ void PrintColorChoosingInsideMenu(WORD lnToPrint, bool withColor, WORD mode)
 	default:
 		break;
 	}
+}
+
+void PrintColorPanel(WORD x_offset, WORD y_offset)
+{
+	unsigned int color_x, color_y, colorPanelValue;
+	for (color_y = 0; color_y < 360; ++color_y)
+	{
+
+		for (color_x = 0; color_x < 256; ++color_x)
+		{
+			colorPanelValue = hsl2rgb((float)color_y, 1.0f, 0.5f);
+			//setcolor(alphacol(colorPanelValue, 0x000000, color_x));
+			putpixel((int)(0.9 * color_x + x_offset), (int)(0.9 * color_y + y_offset), alphacol(colorPanelValue, 0x000000, color_x));
+		}
+	}
+}
+
+color_t alphasingle(color_t a, color_t b, color_t alpha)
+{
+	return (a * (0xFF - alpha) + b * alpha) >> 8;
+}
+
+// 颜色alpha混合计算函数
+color_t alphacol(color_t d, color_t s, color_t alpha)
+{
+	return (alphasingle(d & 0xFF00FF, s & 0xFF00FF, alpha) & 0xFF00FF)
+		| (alphasingle(d & 0xFF00, s & 0xFF00, alpha) >> 8 << 8);
 }
