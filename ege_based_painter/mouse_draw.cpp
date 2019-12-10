@@ -1,7 +1,5 @@
 #include "mouse_draw.h"
 
-
-
 void mouse_DrawCircle(void)
 {
 	const short int TOTAL_LN = 4; // total items in the menu bar
@@ -725,7 +723,7 @@ void mouse_DrawPoly(void)
 				printf("	您已选中点 (%d, %d)\n", polyCoords[2 * sides], polyCoords[2 * sides + 1]);
 
 				if (sqrt(pow(polyCoords[0] - polyCoords[2 * sides], 2) +
-					pow(polyCoords[1] - polyCoords[2 * sides + 1], 2)) <= 4
+					pow(polyCoords[1] - polyCoords[2 * sides + 1], 2)) <= 8
 					&& sides >= 3)
 				{
 					polyCoords[2 * sides] = polyCoords[0];
@@ -767,10 +765,9 @@ void mouse_DrawPoly(void)
 					}
 					DrawAllPrevShapes(true);
 					isInProgress = false;
+					printf("	已完成%d边形的绘图\n", sides);
 					goto move;
 				}
-				
-
 				break;
 			}
 			break; // not needed
@@ -830,17 +827,19 @@ void mouse_DrawPoly(void)
 
 				DrawAllPrevShapes(true);
 				setcolor(0x909090);
+
 				if (sides >= 1)
 				{
 					for (int i = 0; i < sides * 2; i += 2)
 					{
 						line(polyCoords[i], polyCoords[i + 1], polyCoords[i + 2], polyCoords[i + 3]);
 					}
-					
+
 				}
-				if (sqrt(pow(polyCoords[0] - msg.x, 2) +
-					pow(polyCoords[1] - msg.y, 2)) <= 4
-					&& sides >= 3)
+
+				if (sqrt(pow((double)polyCoords[0] - (double)msg.x, 2) +
+					pow((double)polyCoords[1] - (double)msg.y, 2)) <= 8
+					&& sides >= 2)
 				{
 					line(polyCoords[sides * 2], polyCoords[sides * 2 + 1], polyCoords[0], polyCoords[1]);
 				}
@@ -848,7 +847,7 @@ void mouse_DrawPoly(void)
 				{
 					line(polyCoords[sides * 2], polyCoords[sides * 2 + 1], msg.x, msg.y);
 				}
-				
+
 			}
 			break;
 		default:
