@@ -9,6 +9,13 @@ void InitUI(short int errCode)
 	static WORD nRectangles;
 	static WORD nPolygons;
 
+	if (g_nTotalShapes >= 510)
+	{
+		setcolor(0xAA5050);
+		setfont(30, 0, EGE_FONT);
+		xyprintf(MENU_LENGTH + 118, 400, "图形过多！即将溢出！请停止绘画并立即保存！");
+	}
+
 	// count the number of each shape
 	if (tmp_totalShapes != g_nTotalShapes)
 	{

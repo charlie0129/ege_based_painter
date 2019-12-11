@@ -356,6 +356,7 @@ void ChooseColor_EGE(WORD mode)
 			break;
 		}
 	}
+	delimage(img);
 }
 
 

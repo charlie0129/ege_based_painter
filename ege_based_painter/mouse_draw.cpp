@@ -719,7 +719,7 @@ void mouse_DrawPoly(void)
 				sides++;
 				polyCoords[2 * sides] = msg.x;
 				polyCoords[2 * sides + 1] = msg.y;
-
+				
 				printf("	您已选中点 (%d, %d)\n", polyCoords[2 * sides], polyCoords[2 * sides + 1]);
 
 				if (sqrt(pow(polyCoords[0] - polyCoords[2 * sides], 2) +
@@ -767,6 +767,13 @@ void mouse_DrawPoly(void)
 					isInProgress = false;
 					printf("	已完成%d边形的绘图\n", sides);
 					goto move;
+				}
+				if (sides >= 24)
+				{
+					MessageBox(NULL,
+						TEXT("边数过多，请立即将正在绘画的多边形封口"),
+						TEXT("即将溢出！"),
+						MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 				}
 				break;
 			}

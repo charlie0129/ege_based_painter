@@ -58,6 +58,13 @@ void coord_DrawPolyPrompt(void)
 			errCode++;
 			continue;
 		}
+
+		if (sides >= 24)
+		{
+			MessageBox(NULL, TEXT("±ßÊý¹ý¶à"), NULL, MB_OK | MB_SYSTEMMODAL);
+			errCode++;
+			continue;
+		}
 			
 			
 	}
