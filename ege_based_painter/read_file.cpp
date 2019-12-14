@@ -25,8 +25,6 @@ bool ReadFromFile(void)
 	xyprintf(8, 8 + 1 * MENU_HIGHT, "不读取绘图存档");
 	xyprintf(MENU_LENGTH + 15, 8 + 2 * MENU_HIGHT, "用鼠标点击菜单");
 
-
-
 	for (; !isReadyToExit; delay_fps(REFRESH_RATE))
 	{
 		msg = getmouse();
