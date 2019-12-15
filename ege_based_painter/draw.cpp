@@ -20,13 +20,13 @@ void DrawAllPrevShapes(bool withColor)
 				else
 				{
 					setfillcolor(0xFFFFFF);
-				}
+				} // end of if
 			}
 			else
 			{
-				setcolor(0xDDDDDD);
+				setcolor(0xCCCCCC);
 				setfillcolor(0xDDDDDD);
-			}
+			} // end of if
 
 			switch (shapeData[i].shapeType)
 			{

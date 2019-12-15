@@ -61,7 +61,7 @@ bool ReadFromFile(void)
 					cleardevice();
 					InitUI(0);
 					int selection = MessageBox(NULL, 
-						TEXT("请检查文件是否正确并确保路径没有中文"), 
+						TEXT("请检查文件是否正确"), 
 						TEXT("读取错误！"), 
 						MB_ABORTRETRYIGNORE | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 					switch (selection)

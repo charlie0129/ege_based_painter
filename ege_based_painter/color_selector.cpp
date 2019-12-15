@@ -445,10 +445,9 @@ void PrintColorPanel(WORD x_offset, WORD y_offset)
 	unsigned int color_x, color_y, colorPanelValue;
 	for (color_y = 0; color_y < 360; ++color_y)
 	{
-
 		for (color_x = 0; color_x < 256; ++color_x)
 		{
-			colorPanelValue = hsl2rgb((float)color_y, 1.0f, 0.5f);
+			colorPanelValue = hsl2rgb((float)color_y, 1.0f, 0.5f); // color with alpha channel
 			putpixel((int)(0.9 * color_x + x_offset), (int)(0.9 * color_y + y_offset), alphacol(colorPanelValue, 0x000000, color_x));
 		}
 	}

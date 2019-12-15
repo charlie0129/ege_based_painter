@@ -30,7 +30,7 @@ void mouse_DrawCircle(void)
 			case 1:
 				return;
 				break;
-			case 2:
+			case 2: // undo
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -49,14 +49,14 @@ void mouse_DrawCircle(void)
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 3:
+			case 3: // choose foreground color
 				ChooseColor_EGE(0);
 				cleardevice();
 				InitUI(0);
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 4:
+			case 4: // choose fill color
 				ChooseColor_EGE(1);
 				cleardevice();
 				InitUI(0);
@@ -67,7 +67,8 @@ void mouse_DrawCircle(void)
 				break;
 			}
 
-			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
+			/* if the mouse click indicates the first dot, 
+			store the position data of the center of the circle */
 			if (!isInProgress)
 			{
 				circleCenterX = msg.x;
@@ -86,7 +87,8 @@ void mouse_DrawCircle(void)
 				break;
 			}
 
-			/* if the mouse click indicates the first dot, store the position data of another dot on the circle */
+			/* if the mouse click indicates the first dot, 
+			store the position data of another dot on the circle */
 			if (isInProgress)
 			{
 
@@ -95,6 +97,7 @@ void mouse_DrawCircle(void)
 
 				printf("	您已选中圆上一点 (%d, %d)\n", circleOuterX, circleOuterY);
 			
+				// store coordinate data
 				g_nTotalShapes++;
 				shapeData[g_nTotalShapes - 1].shapeType = shape_circle;
 				shapeData[g_nTotalShapes - 1].coords[0].x = circleCenterX;
@@ -102,6 +105,7 @@ void mouse_DrawCircle(void)
 				shapeData[g_nTotalShapes - 1].coords[1].x = circleOuterX;
 				shapeData[g_nTotalShapes - 1].coords[1].y = circleOuterY;
 
+				// store current color settings
 				if (!g_isUserSetColor)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = RandColor();
@@ -190,6 +194,7 @@ void mouse_DrawCircle(void)
 			
 			if (isInProgress)
 			{
+				// refresh continuously the screen to show live shape preview
 				cleardevice(); 
 				delay_fps(10000);
 				InitUI(1);
@@ -211,8 +216,6 @@ void mouse_DrawCircle(void)
 				
 				circle(circleCenterX, circleCenterY, (int)sqrt(pow((double)circleCenterX - (double)msg.x, 2) + pow((double)circleCenterY - (double)msg.y, 2)));
 			}
-
-
 			break;
 		default:
 			break;
@@ -251,7 +254,7 @@ void mouse_DrawLine(void)
 			case 1:
 				return;
 				break;
-			case 2:
+			case 2: // undo
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -270,14 +273,14 @@ void mouse_DrawLine(void)
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 3:
+			case 3: // choose foreground color
 				ChooseColor_EGE(0);
 				cleardevice();
 				InitUI(0);
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 4:
+			case 4: // choose fill color
 				ChooseColor_EGE(1);
 				cleardevice();
 				InitUI(0);
@@ -288,7 +291,8 @@ void mouse_DrawLine(void)
 				break;
 			}
 
-			/* if the mouse click indicates the first dot, store the position data of the starting point */
+			/* if the mouse click indicates the first dot, 
+			store the position data of the starting point */
 			if (!isInProgress)
 			{
 				lineStartPositionX = msg.x;
@@ -307,7 +311,8 @@ void mouse_DrawLine(void)
 				break;
 			}
 
-			/* if the mouse click indicates the second dot, store the position data of the ending point */
+			/* if the mouse click indicates the second dot, 
+			store the position data of the ending point */
 			if (isInProgress)
 			{
 				lineEndPositionX = msg.x;
@@ -315,12 +320,15 @@ void mouse_DrawLine(void)
 
 				printf("	您已选中终点 (%d, %d)\n", lineEndPositionX, lineEndPositionY);
 
+				// store coordinate data
 				g_nTotalShapes++;
 				shapeData[g_nTotalShapes - 1].shapeType = shape_line;
 				shapeData[g_nTotalShapes - 1].coords[0].x = lineStartPositionX;
 				shapeData[g_nTotalShapes - 1].coords[0].y = lineStartPositionY;
 				shapeData[g_nTotalShapes - 1].coords[1].x = lineEndPositionX;
 				shapeData[g_nTotalShapes - 1].coords[1].y = lineEndPositionY;
+
+				// store current color settings
 				if (!g_isUserSetColor)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = RandColor();
@@ -391,6 +399,7 @@ void mouse_DrawLine(void)
 
 			if (isInProgress)
 			{
+				// refresh continuously the screen to show live shape preview
 				cleardevice();
 				delay_fps(10000);
 				InitUI(1);
@@ -451,7 +460,7 @@ void mouse_DrawRectangle(void)
 			case 1:
 				return;
 				break;
-			case 2:
+			case 2: // undo
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -470,14 +479,14 @@ void mouse_DrawRectangle(void)
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 3:
+			case 3: // choose foreground color
 				ChooseColor_EGE(0);
 				cleardevice();
 				InitUI(0);
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 4:
+			case 4: // choose fill color
 				ChooseColor_EGE(1);
 				cleardevice();
 				InitUI(0);
@@ -488,7 +497,8 @@ void mouse_DrawRectangle(void)
 				break;
 			}
 
-			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
+			/* if the mouse click indicates the first dot, 
+			store the position data of the upper left corner */
 			if (!isInProgress)
 			{
 				rectUpLCornerX = msg.x;
@@ -507,7 +517,8 @@ void mouse_DrawRectangle(void)
 				break;
 			}
 
-			/* if the mouse click indicates the first dot, store the position data of another dot on the circle */
+			/* if the mouse click indicates the second dot, 
+			store the position data of the lower rignt corner */
 			if (isInProgress)
 			{
 
@@ -516,6 +527,7 @@ void mouse_DrawRectangle(void)
 
 				printf("	您已选中点 (%d, %d)\n", rectLowRCornerX, rectLowRCornerY);
 
+				// store coordinate data
 				g_nTotalShapes++;
 				shapeData[g_nTotalShapes - 1].shapeType = shape_rectangle;
 				shapeData[g_nTotalShapes - 1].coords[0].x = rectUpLCornerX;
@@ -523,6 +535,7 @@ void mouse_DrawRectangle(void)
 				shapeData[g_nTotalShapes - 1].coords[1].x = rectLowRCornerX;
 				shapeData[g_nTotalShapes - 1].coords[1].y = rectLowRCornerY;
 
+				// store current color settings
 				if (!g_isUserSetColor)
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = RandColor();
@@ -530,7 +543,7 @@ void mouse_DrawRectangle(void)
 				else
 				{
 					shapeData[g_nTotalShapes - 1].foregroundColor = g_customColor;
-				}
+				} // end of if
 				if (!g_isUserSetFillColor)
 				{
 					shapeData[g_nTotalShapes - 1].isFill = false;
@@ -545,8 +558,8 @@ void mouse_DrawRectangle(void)
 					else
 					{
 						shapeData[g_nTotalShapes - 1].fillColor = g_customFillColor;
-					}
-				}
+					} // end of if
+				} // end of if
 
 				DrawAllPrevShapes(true);
 
@@ -589,6 +602,7 @@ void mouse_DrawRectangle(void)
 					PrintMouseDrawingInsideMenu(0);
 					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(2);
+					break;
 				case 3:
 					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
@@ -608,12 +622,12 @@ void mouse_DrawRectangle(void)
 
 			if (isInProgress)
 			{
+				// refresh continuously the screen to show live shape preview
 				cleardevice();
 				delay_fps(10000);
 				InitUI(1);
 				setcolor(0x50AA50);
 				xyprintf(678, 582, "当前坐标: (%03d, %03d)", msg.x, msg.y);
-
 
 				putpixel(rectUpLCornerX, rectUpLCornerY, 0x707000);
 				putpixel(rectUpLCornerX + 1, rectUpLCornerY, 0x707000);
@@ -643,6 +657,7 @@ void mouse_DrawPoly(void)
 	bool			isInProgress = false; // To determine whether the mouse click is the first step or the second step
 	WORD            polyCoords[50];
 	WORD            sides = 0;
+
 	printf("已进入鼠标画多边形模式\n");
 	printf("操作指南：\n");
 	printf("用鼠标点选顶点，最后一个点靠近起始点来结束\n");
@@ -664,7 +679,7 @@ void mouse_DrawPoly(void)
 			case 1:
 				return;
 				break;
-			case 2:
+			case 2: // undo
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -683,14 +698,14 @@ void mouse_DrawPoly(void)
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 3:
+			case 3: // choose foreground color
 				ChooseColor_EGE(0);
 				cleardevice();
 				InitUI(0);
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 4:
+			case 4: // choose fill color
 				ChooseColor_EGE(1);
 				cleardevice();
 				InitUI(0);
@@ -701,9 +716,11 @@ void mouse_DrawPoly(void)
 				break;
 			}
 
-			/* if the mouse click indicates the first dot, store the position data of the center of the circle */
+			/* if the mouse click indicates the first dot, 
+			store the position data of it */
 			if (!isInProgress)
 			{
+				// store coordinate data
 				polyCoords[0] = msg.x;
 				polyCoords[1] = msg.y;
 				sides = 0;
@@ -713,19 +730,27 @@ void mouse_DrawPoly(void)
 				break;
 			}
 
-			/* if the mouse click indicates the first dot, store the position data of other dots on the circle */
+			/* if the mouse click indicates another dot, 
+			store the position data of it */
 			if (isInProgress)
 			{
+				// store coordinate data
 				sides++;
 				polyCoords[2 * sides] = msg.x;
 				polyCoords[2 * sides + 1] = msg.y;
 				
 				printf("	您已选中点 (%d, %d)\n", polyCoords[2 * sides], polyCoords[2 * sides + 1]);
 
+				// when the distance between 
+				// the last dot and
+				// the first dot
+				// is smaller than 8 px
+				// then does the following things
 				if (sqrt(pow(polyCoords[0] - polyCoords[2 * sides], 2) +
 					pow(polyCoords[1] - polyCoords[2 * sides + 1], 2)) <= 8
 					&& sides >= 3)
 				{
+					// closes the polygon
 					polyCoords[2 * sides] = polyCoords[0];
 					polyCoords[2 * sides + 1] = polyCoords[1];
 					g_nTotalShapes++;
@@ -739,6 +764,7 @@ void mouse_DrawPoly(void)
 						shapeData[g_nTotalShapes - 1].coords[j].y = polyCoords[2 * j + 1];
 					}
 
+					// store current color settings
 					if (!g_isUserSetColor)
 					{
 						shapeData[g_nTotalShapes - 1].foregroundColor = RandColor();
@@ -768,7 +794,7 @@ void mouse_DrawPoly(void)
 					printf("	已完成%d边形的绘图\n", sides);
 					goto move;
 				}
-				if (sides >= 24)
+				if (sides >= 23)
 				{
 					MessageBox(NULL,
 						TEXT("边数过多，请立即将正在绘画的多边形封口"),
@@ -806,6 +832,7 @@ void mouse_DrawPoly(void)
 					PrintMouseDrawingInsideMenu(0);
 					setcolor(0x5050AA);
 					PrintMouseDrawingInsideMenu(2);
+					break;
 				case 3:
 					setcolor(0x000000);
 					PrintMouseDrawingInsideMenu(0);
@@ -825,6 +852,7 @@ void mouse_DrawPoly(void)
 
 			if (isInProgress)
 			{
+				// refresh continuously the screen to show live shape preview
 				cleardevice();
 				delay_fps(10000);
 				InitUI(1);
@@ -835,15 +863,20 @@ void mouse_DrawPoly(void)
 				DrawAllPrevShapes(true);
 				setcolor(0x909090);
 
+				// draws a line which is the line connecting
+				// the last dot of the polygon and the mouse pointer
 				if (sides >= 1)
 				{
 					for (int i = 0; i < sides * 2; i += 2)
 					{
 						line(polyCoords[i], polyCoords[i + 1], polyCoords[i + 2], polyCoords[i + 3]);
 					}
-
 				}
 
+				// closes the polgon automatically
+				// when the distance between
+				// the mouse pointer and the first dot of the polygon
+				// is smaller than 8px
 				if (sqrt(pow((double)polyCoords[0] - (double)msg.x, 2) +
 					pow((double)polyCoords[1] - (double)msg.y, 2)) <= 8
 					&& sides >= 2)

@@ -43,7 +43,7 @@ void coord_DrawPolyPrompt(void)
 		// make sure the input is all numbers
 		if (strspn(str1, "0123456789") != strlen(str1))
 		{
-			MessageBox(NULL, TEXT("边数只能包含数字"), NULL, MB_OK | MB_SYSTEMMODAL);
+			MessageBox(NULL, TEXT("边数只能包含数字"), NULL, MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 			errCode++;
 			continue;
 		}
@@ -54,14 +54,14 @@ void coord_DrawPolyPrompt(void)
 		// avoid out-of-range input numbers
 		if (sides < 3)
 		{
-			MessageBox(NULL, TEXT("不能构成多边形"), NULL, MB_OK | MB_SYSTEMMODAL);
+			MessageBox(NULL, TEXT("不能构成多边形"), NULL, MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 			errCode++;
 			continue;
 		}
 
 		if (sides >= 24)
 		{
-			MessageBox(NULL, TEXT("边数过多"), NULL, MB_OK | MB_SYSTEMMODAL);
+			MessageBox(NULL, TEXT("边数过多"), NULL, MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 			errCode++;
 			continue;
 		}
@@ -100,7 +100,7 @@ void coord_DrawPolyPrompt(void)
 			// make sure the input is all numbers
 			if (strspn(readTmp, "0123456789") != strlen(readTmp))
 			{
-				MessageBox(NULL, TEXT("坐标只能包含数字"), NULL, MB_OK | MB_SYSTEMMODAL);
+				MessageBox(NULL, TEXT("坐标只能包含数字"), NULL, MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 				errCode++;
 				break;
 				errCode = 0;
@@ -109,7 +109,7 @@ void coord_DrawPolyPrompt(void)
 			// avoid too many input numbers 
 			if (i >= (sides * 2))
 			{
-				MessageBox(NULL, TEXT("坐标个数过多"), NULL, MB_OK | MB_SYSTEMMODAL);
+				MessageBox(NULL, TEXT("坐标个数过多"), NULL, MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 				errCode++;
 				break;
 			}
@@ -120,7 +120,7 @@ void coord_DrawPolyPrompt(void)
 			// avoid out-of-range input numbers
 			if ((numRead[i] > INPUT_MAX) || (numRead[i] < INPUT_MIN))
 			{
-				MessageBox(NULL, TEXT("坐标范围无效"), NULL, MB_OK | MB_SYSTEMMODAL);
+				MessageBox(NULL, TEXT("坐标范围无效"), NULL, MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 				errCode++;
 				break;
 			}
@@ -132,7 +132,7 @@ void coord_DrawPolyPrompt(void)
 		// avoid too few input numbers
 		if (i < (sides * 2))
 		{
-			MessageBox(NULL, TEXT("坐标个数过少"), NULL, MB_OK | MB_SYSTEMMODAL);
+			MessageBox(NULL, TEXT("坐标个数过少"), NULL, MB_OK | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 			errCode++;
 		}
 	}
@@ -200,7 +200,7 @@ void coord_DrawPoly(void)
 			case 1:
 				return;
 				break;
-			case 2:
+			case 2: // undo
 				if (g_nTotalShapes > 0)
 				{
 					if (!isInProgress)
@@ -219,20 +219,20 @@ void coord_DrawPoly(void)
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 3:
+			case 3: // draw a polygon
 				coord_DrawPolyPrompt();
 				cleardevice();
 				InitUI(0);
 				DrawAllPrevShapes(true);
 				break;
-			case 4:
+			case 4: // choose foreground color
 				ChooseColor_EGE(0);
 				cleardevice();
 				InitUI(0);
 				DrawAllPrevShapes(true);
 				goto move;
 				break;
-			case 5:
+			case 5: // choose fill color
 				ChooseColor_EGE(1);
 				cleardevice();
 				InitUI(0);

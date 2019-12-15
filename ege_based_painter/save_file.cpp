@@ -30,7 +30,7 @@ void WriteToFile(void)
 	{
 		reread:
 		int selection = MessageBox(NULL,
-			TEXT("无法准备被写入的文件！\n确保画板拥有写入权限且路径没有中文"),
+			TEXT("无法准备被写入的文件！\n确保画板拥有写入权限"),
 			TEXT(""),
 			MB_ABORTRETRYIGNORE | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
 		switch (selection)
