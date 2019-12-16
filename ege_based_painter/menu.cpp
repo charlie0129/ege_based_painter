@@ -22,6 +22,21 @@ void Menu(bool readResult)
 			switch (GetMouseCurrentLnAndCol(1, TOTAL_LN, 1, 1).ln)
 			{
 			case 1: // 退出
+				if (g_isFileEdited)
+				{
+					int selection = MessageBox(NULL,
+						TEXT("当前有更改未保存，是否确定要退出？"),
+						TEXT("提示"),
+						MB_OKCANCEL | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
+					if (selection == IDOK)
+					{
+						return;
+					}
+					else if (selection == IDCANCEL)
+					{
+						break;
+					}
+				}
 				return;
 				break;
 			case 2: // 另存为

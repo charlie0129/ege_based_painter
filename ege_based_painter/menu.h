@@ -7,6 +7,7 @@
 #include "save_file.h"
 
 extern WORD g_nTotalShapes;
+extern bool g_isFileEdited;
 
 void Menu(bool readResult);
 void PrintMenu(short int lnToPrint);
