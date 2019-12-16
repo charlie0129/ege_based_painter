@@ -20,7 +20,7 @@ void InitUI(short int errCode)
 	// count the number of each shape
 	if (tmp_totalShapes != g_nTotalShapes)
 	{
-		fileEdited = true;
+		g_isFileEdited = true;
 		nLines = 0;
 		nCircles = 0;
 		nRectangles = 0;
@@ -72,7 +72,7 @@ void InitUI(short int errCode)
 		xyprintf(2, 582, "正在绘图");
 	}
 
-	if (fileEdited)
+	if (g_isFileEdited)
 	{
 		setcolor(0xAA5050);
 		xyprintf(67, 582, "更改未保存");

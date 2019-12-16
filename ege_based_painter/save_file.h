@@ -4,6 +4,6 @@
 
 extern        WORD g_nTotalShapes;
 extern char   fileValidityCheckSuffix;
-extern bool   fileEdited;
+extern bool   g_isFileEdited;
 
 void WriteToFile(void);

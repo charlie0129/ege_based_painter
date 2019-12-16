@@ -163,7 +163,7 @@ bool ReadFromFile(void)
 		}
 	}
 	InitUI(0);
-	fileEdited = false;
+	g_isFileEdited = false;
 	return readResult;
 }
 

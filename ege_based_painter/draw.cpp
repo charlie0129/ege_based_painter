@@ -125,7 +125,7 @@ int RandColor(void)
 	int R = 0, G = 0, B = 0;
 	int hexColorValue; // the final hexadecimal output
 
-	do // condition added to avoid the colors that are too dark. readibility improved.
+	do
 	{
 		randomize();
 		R = random(255);// randInt(0, 255);
@@ -134,7 +134,7 @@ int RandColor(void)
 		randomize();
 		B = random(255);// randInt(0, 255);
 	} 
-	while ((R >= 180) || (G >= 180) || (B >= 180));
+	while ((R >= 180) || (G >= 180) || (B >= 180)); // condition added to avoid the colors that are too dark. readibility improved.
 
 	hexColorValue = (R << 16) + (G << 8) + B; // convert separate RGB channels into a single value that represents colors
 	// printf("%x", hexValue); // display the output value of the function for debug purposes

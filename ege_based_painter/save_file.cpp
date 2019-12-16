@@ -76,7 +76,7 @@ void WriteToFile(void)
 		}
 	}
 
-	fileEdited = false;
+	g_isFileEdited = false;
 	InitUI(0);
 	return;
 }
