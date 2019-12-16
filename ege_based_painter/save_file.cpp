@@ -10,7 +10,7 @@ void WriteToFile(void)
 	ofn.lStructSize = sizeof(OPENFILENAME);
 	ofn.hwndOwner = NULL;
 	ofn.lpstrFilter = TEXT("Shape Data (*.draw)\0*.draw\0\0");
-	ofn.nFilterIndex = 1;//¹ýÂËÆ÷Ë÷Òý
+	ofn.nFilterIndex = 1;
 	ofn.lpstrFile = strFilename;
 	ofn.nMaxFile = sizeof(strFilename);
 	ofn.lpstrInitialDir = NULL;
