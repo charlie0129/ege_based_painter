@@ -68,7 +68,29 @@ void WriteToFile(void)
 				TEXT("保存成功"),
 				TEXT("提示"),
 				MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
-			fclose(fp);
+
+			closefile:
+			if (fclose(fp) == EOF)
+			{
+				int selection2 = MessageBox(NULL,
+					TEXT("无法关闭被写入的文件！"),
+					TEXT(""),
+					MB_RETRYCANCEL | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
+				switch (selection2)
+				{
+				case IDRETRY:
+					goto reread;
+					break;
+				case IDCANCEL:
+					break;
+				default:
+					break;
+				}
+			}
+			else
+			{
+				g_isFileEdited = false;
+			}
 		}
 		else
 		{
@@ -76,7 +98,6 @@ void WriteToFile(void)
 		}
 	}
 
-	g_isFileEdited = false;
 	InitUI(0);
 	return;
 }

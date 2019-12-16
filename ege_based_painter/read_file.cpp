@@ -105,9 +105,32 @@ bool ReadFromFile(void)
 								TEXT("读取成功"),
 								TEXT("提示"),
 								MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
-							fclose(fp);
-							readResult = 1;
-							isReadyToExit = true;
+						closefile:
+							if (fclose(fp) == EOF)
+							{
+								int selection2 = MessageBox(NULL,
+									TEXT("无法关闭被打开的文件！"),
+									TEXT(""),
+									MB_RETRYCANCEL | MB_SYSTEMMODAL | MB_ICONEXCLAMATION);
+								switch (selection2)
+								{
+								case IDRETRY:
+									goto case1;
+									break;
+								case IDCANCEL:
+									isReadyToExit = true;
+									readResult = 0;
+									break;
+								default:
+									break;
+								}
+							}
+							else
+							{
+								fclose(fp);
+								readResult = 1;
+								isReadyToExit = true;
+							}
 						}
 						else
 						{
