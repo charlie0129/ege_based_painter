@@ -31,12 +31,12 @@ struct Coordinate
 
 struct ShapeData
 {
-	enum SHAPE shapeType;
-	int extraData[10];
+	enum SHAPE        shapeType;
+	int               extraData[10];
 	struct Coordinate coords[50];
-	bool isFill;
-	UINT foregroundColor;
-	UINT fillColor;
+	bool              isFill;
+	UINT              foregroundColor;
+	UINT              fillColor;
 };
 
 struct MenuLnAndCol
