@@ -50,7 +50,8 @@ bool ReadFromFile(void)
 					goto begin;
 				}
 
-				TCHARToChar(strFilename, c_strFilename);
+				TCHARToChar(strFilename, c_strFilename); // convert wide character strings to standard strings
+				                                         // to avoid certain errors
 				
 				fp = fopen(c_strFilename, "rb");
 				rewind(fp);

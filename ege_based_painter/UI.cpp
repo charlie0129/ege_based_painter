@@ -20,7 +20,9 @@ void InitUI(short int errCode)
 	// count the number of each shape
 	if (tmp_totalShapes != g_nTotalShapes)
 	{
-		g_isFileEdited = true;
+		g_isFileEdited = true; // indicates whether the picture is edited
+		
+		// initialize variables for counting
 		nLines = 0;
 		nCircles = 0;
 		nRectangles = 0;
