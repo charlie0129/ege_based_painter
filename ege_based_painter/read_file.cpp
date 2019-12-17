@@ -105,7 +105,7 @@ bool ReadFromFile(void)
 								TEXT("读取成功"),
 								TEXT("提示"),
 								MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
-						closefile:
+
 							if (fclose(fp) == EOF)
 							{
 								int selection2 = MessageBox(NULL,

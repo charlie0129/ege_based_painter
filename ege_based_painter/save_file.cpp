@@ -69,7 +69,6 @@ void WriteToFile(void)
 				TEXT("ÌבÊ¾"),
 				MB_OK | MB_SYSTEMMODAL | MB_ICONINFORMATION);
 
-			closefile:
 			if (fclose(fp) == EOF)
 			{
 				int selection2 = MessageBox(NULL,
