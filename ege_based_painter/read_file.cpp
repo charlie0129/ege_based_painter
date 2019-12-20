@@ -97,7 +97,7 @@ bool ReadFromFile(void)
 						&& (fread(&readFileValidityCheckSuffix,
 							sizeof(readFileValidityCheckSuffix),
 							1, 
-							fp) == 1))
+							fp) == 1)) // check the validity of the data written
 					{
 						if (readFileValidityCheckSuffix 
 							== fileValidityCheckSuffix)

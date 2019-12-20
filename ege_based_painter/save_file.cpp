@@ -64,7 +64,7 @@ void WriteToFile(void)
 			&& (fwrite(&fileValidityCheckSuffix, 
 				sizeof(fileValidityCheckSuffix), 
 				1, 
-				fp) == 1))
+				fp) == 1)) // check the validity of the data read
 		{
 			MessageBox(NULL,
 				TEXT("±£´æ³É¹¦"),
