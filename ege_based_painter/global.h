@@ -17,30 +17,30 @@
 
 enum SHAPE
 {
-	shape_line,
-	shape_circle,
-	shape_rectangle,
-	shape_polygon
+    shape_line,
+    shape_circle,
+    shape_rectangle,
+    shape_polygon
 };
 
 struct Coordinate
 {
-	WORD x;
-	WORD y;
+    WORD x;
+    WORD y;
 };
 
 struct ShapeData
 {
-	enum SHAPE        shapeType;
-	int               extraData[10];
-	struct Coordinate coords[50];
-	bool              isFill;
-	UINT              foregroundColor;
-	UINT              fillColor;
+    enum SHAPE        shapeType;
+    int               extraData[10];
+    struct Coordinate coords[50];
+    bool              isFill;
+    UINT              foregroundColor;
+    UINT              fillColor;
 };
 
 struct MenuLnAndCol
 {
-	WORD ln;
-	WORD col;
+    WORD ln;
+    WORD col;
 };
